@@ -5,54 +5,41 @@
  */
 
 import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import { StackNavigator, DrawerNavigator } from 'react-navigation';
+import WelcomeScreen from './src/screens/welcomescreen';
+import Homescreen from './src/screens/homescreen';
+import SignInScreen from './src/screens/signinscreen';
+import SignUpScreen from './src/screens/signupscreen';
+import RouteDetailsScreen from './src/screens/routedetailsscreen';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
+const DrawerStack = DrawerNavigator({
+	Home: { screen: Homescreen },
 });
 
-type Props = {};
-export default class App extends Component<Props> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
-      </View>
-    );
-  }
+const DrawerNavigation = StackNavigator(
+	{
+		DrawerStack: { screen: DrawerStack },
+	},
+	{
+		headerMode: 'float',
+	}
+);
+
+const RootNavigator = StackNavigator(
+	{
+		Welcome: { screen: WelcomeScreen },
+		SignIn: { screen: SignInScreen },
+		SignUp: { screen: SignUpScreen },
+		Home: { screen: Homescreen },
+		RouteDetailsScreen: { screen: RouteDetailsScreen },
+		drawerStack: { screen: DrawerNavigation },
+	},
+	{ initialRouteName: 'Welcome' }
+);
+
+export default class App extends Component {
+	render() {
+		return <RootNavigator />;
+	}
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
