@@ -5,7 +5,7 @@ import RoutesCard from '../components/routescard';
 export default class Homescreen extends Component {
 	static navigationOptions = {
 		title: 'Choose a Route!',
-		headerRight: <Text onPress={() => this.props.navigation.navigate('drawerStack')}>Menu</Text>,
+		headerRight: <Text onPress={() => this.navigation.navigate('drawerStack')}>Menu</Text>,
 	};
 
 	constructor(props) {
@@ -16,6 +16,7 @@ export default class Homescreen extends Component {
 	}
 
 	async componentWillMount() {
+		this.navigation = this.props.navigation.state.params.navigation;
 		try {
 			let results = await fetch('https://bham-hops.herokuapp.com/api/routes');
 			let routes = await results.json();
@@ -29,7 +30,9 @@ export default class Homescreen extends Component {
 		return (
 			<ScrollView>
 				{this.state.routes.map((route, index) => {
-					return <RoutesCard key={index} route={route} navigation={this.props.navigation} />;
+					return (
+						<RoutesCard key={index} route={route} navigation={this.props.navigation} id={route.routeid} />
+					);
 				})}
 			</ScrollView>
 		);
