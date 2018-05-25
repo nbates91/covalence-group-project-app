@@ -12,6 +12,10 @@ import Homescreen from './src/screens/homescreen';
 import SignInScreen from './src/screens/signinscreen';
 import SignUpScreen from './src/screens/signupscreen';
 import RouteDetailsScreen from './src/screens/routedetailsscreen';
+import ActiveRouteScreen from './src/screens/activeroutescreen';
+import GameOverScreen from './src/screens/gameoverscreen';
+import ProfilePageScreen from './src/screens/profilepagescreen';
+import LocationDetailsScreen from './src/screens/locationdetailsscreen';
 
 const DrawerStack = DrawerNavigator({
 	Home: { screen: Homescreen },
@@ -34,6 +38,10 @@ const RootNavigator = StackNavigator(
 		Home: { screen: Homescreen },
 		RouteDetailsScreen: { screen: RouteDetailsScreen },
 		drawerStack: { screen: DrawerNavigation },
+		ActiveRoute: { screen: ActiveRouteScreen },
+		GameOver: { screen: GameOverScreen },
+		ProfilePage: { screen: ProfilePageScreen },
+		LocationDetails: { screen: LocationDetailsScreen },
 	},
 	{ initialRouteName: 'Welcome' }
 );

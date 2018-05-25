@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { Button, Card, CardItem, Text, Body } from 'native-base';
 
-export default class CardItemButton extends Component {
+export default class RoutesCard extends Component {
+	switchScreens(id, routename) {
+		this.props.navigation.navigate('RouteDetailsScreen', { id, routename });
+	}
+
 	render() {
 		return (
-			<Card id={this.props.route.id}>
-				<CardItem button onPress={() => this.props.navigation.navigate('RouteDetailsScreen')}>
+			<Card>
+				<CardItem button onPress={() => this.switchScreens(this.props.id, this.props.route.routename)}>
 					<Body>
 						<Text>{this.props.route.routename}</Text>
 						<Text>Number of stops:{this.props.route.numberofstops}</Text>
