@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View } from 'react-native';
+import { Button, Text } from 'native-base';
 
 export default class WelcomeScreen extends Component {
+	static navigationOptions = {
+		title: 'Welcome to Craft Crawls!',
+	};
 	render() {
 		return (
 			<View>
-				<Text> Craft Crawls </Text>
-				<Text />
-				<Text> Welcome to Craft Crawls! </Text>
-				<Button title="View Routes" onPress={() => this.props.navigation.navigate('Home')} />
-				<Button title="Sign In" onPress={() => this.props.navigation.navigate('SignIn')} />
+				<Button block onPress={() => this.props.navigation.navigate('Home')} >
+					<Text>View Routes</Text>
+				</Button>
+				<Button block onPress={() => this.props.navigation.navigate('SignIn')} >
+					<Text>Sign In</Text>
+				</Button>
 				<Text> Don't have an account yet? </Text>
-				<Button title="Sign Up" onPress={() => this.props.navigation.navigate('SignUp')} />
+				<Button block onPress={() => this.props.navigation.navigate('SignUp')} >
+					<Text>Sign Up</Text>
+				</Button>
 			</View>
 		);
 	}
