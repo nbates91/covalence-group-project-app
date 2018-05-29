@@ -6,6 +6,7 @@ export default class SideBar extends Component {
 		return (
 			<ScrollView>
 				<Text onPress={() => this.props.navigation.state.params.navigation.navigate('Home')}> Home </Text>
+				<Text onPress={() => this.props.navigation.state.params.navigation.navigate('ActiveRoute')}> Active Route </Text>
 			</ScrollView>
 		);
 	}

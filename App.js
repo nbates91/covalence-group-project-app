@@ -20,13 +20,13 @@ import LocationDetailsScreen from './src/screens/locationdetailsscreen';
 
 // const DrawerStack = DrawerNavigator({
 // 	Home: { screen: Homescreen },
+// 	ActiveRoute: { screen: ActiveRouteScreen },
 // });
 
-const DrawerNavigation = StackNavigator(
+const DrawerNavigation = DrawerNavigator(
 	{
 		Home: { screen: Homescreen },
 		ActiveRoute: { screen: ActiveRouteScreen },
-		// DrawerStack: { screen: DrawerStack },
 	},
 	{
 		headerMode: 'float',
@@ -47,7 +47,7 @@ const RootNavigator = StackNavigator(
 		LocationDetails: { screen: LocationDetailsScreen },
 		// Contact: { screen: ContactScreen },
 	},
-	{ initialRouteName: 'Contact' }
+	{ initialRouteName: 'Welcome' }
 );
 
 export default class App extends Component {

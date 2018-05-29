@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, Button } from 'react-native';
+import { ScrollView, Button, Text} from 'react-native';
 import RoutesCard from '../components/routescard';
-// import Hamburger from '../components/hamburgermenu';
 
 export default class Homescreen extends Component {
 	static navigationOptions = ({ navigation }) => ({
 		title: 'Choose a Route!',
-		// headerRight: <Hamburger onPress={() => navigation.navigate('drawerStack')}> Menu </Hamburger>,
+		drawerLabel: "Home",
 		headerRight: <Text onPress={() => navigation.navigate('drawerStack')}>Menu</Text>,
 	});
 
@@ -37,6 +36,7 @@ export default class Homescreen extends Component {
 	render() {
 		return (
 			<ScrollView>
+				{/* <Button title="Menu" onPress={() => this.props.navigation.navigate('DrawerOpen')}/> */}
 				{this.state.routes.map((route, index) => {
 					return (
 						<RoutesCard key={index} route={route} navigation={this.props.navigation} id={route.routeid} />
