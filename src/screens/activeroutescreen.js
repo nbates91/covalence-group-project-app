@@ -5,27 +5,34 @@ import { Button, Text } from 'native-base';
 export default class ActiveRoute extends Component {
 	constructor(props) {
 		super(props);
+		this.id = this.props.navigation.state.params.id;
 		this.state = {
-			route: {},
+			route: [],
 			stops: [],
 		};
 	}
-	// componentWillMount() {
-	// 	fetch(`api/routes/${this.props.match.params.routeid}`)
-	// 		.then(res => {
-	// 			return res.json();
-	// 		})
-	// 		.then(route => {
-	// 			this.setState({ route });
-	// 		});
-	// }
-	// componentWillMount() {
-	// 	fetch(`api/routes/stops/${this.props.match.params.routeStopsId}`)
+	componentWillMount() {
+		fetch('https://bham-hops.herokuapp.com/api/routes/1')
+			.then(res => {
+				return res.json();
+			})
+			.then(route => {
+				this.setState({ route: route[0] });
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	}
+	// componentDidMount() {
+	// 	fetch(`api/routes/stops/${this.id}`)
 	// 		.then(res => {
 	// 			return res.json();
 	// 		})
 	// 		.then(stops => {
-	// 			this.setState({ stops });
+	// 			this.setState({ stops: stops[0] });
+	// 		})
+	// 		.catch(err => {
+	// 			console.log(err);
 	// 		});
 	// }
 	tapOutAlert = () => {
@@ -51,6 +58,7 @@ export default class ActiveRoute extends Component {
 	render() {
 		return (
 			<View>
+				<Text>{this.state.route.name}</Text>
 				<Button block onPress={this.nextStopTempMessage}>
 					<Text>Directions to next stop</Text>
 				</Button>
