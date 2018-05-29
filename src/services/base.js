@@ -1,5 +1,6 @@
 import 'es6-promise';
 import 'fetch-everywhere';
+import { asyncStorage } from 'react-native';
 
 const AUTH_TOKEN_KEY = 'authtoken';
 let authToken = '';
@@ -7,22 +8,22 @@ let authToken = '';
 function setAuthToken(token, userid) {
 	authToken = `Bearer ${token}`;
 	let user = userid;
-	if (localStorage) {
-		localStorage.setItem(AUTH_TOKEN_KEY, authToken);
-		localStorage.setItem('user', user);
+	if (asyncStorage) {
+		asyncStorage.setItem(AUTH_TOKEN_KEY, authToken);
+		asyncStorage.setItem('user', user);
 	}
 }
 
 function clearAuthToken() {
 	authToken = '';
-	if (localStorage) {
-		localStorage.removeItem(AUTH_TOKEN_KEY);
+	if (asyncStorage) {
+		asyncStorage.removeItem(AUTH_TOKEN_KEY);
 	}
 }
 
 function populateAuthToken() {
-	if (localStorage) {
-		let token = localStorage.getItem(AUTH_TOKEN_KEY);
+	if (asyncStorage) {
+		let token = asyncStorage.getItem(AUTH_TOKEN_KEY);
 		if (token && token !== null) {
 			authToken = token;
 		}
