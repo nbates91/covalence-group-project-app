@@ -16,7 +16,7 @@ import ActiveRouteScreen from './src/screens/activeroutescreen';
 import GameOverScreen from './src/screens/gameoverscreen';
 import ProfilePageScreen from './src/screens/profilepagescreen';
 import LocationDetailsScreen from './src/screens/locationdetailsscreen';
-// import ContactScreen from './src/screens/contactscreen';
+import ContactScreen from './src/screens/contactscreen';
 
 // const DrawerStack = DrawerNavigator({
 // 	Home: { screen: Homescreen },
@@ -45,9 +45,9 @@ const RootNavigator = StackNavigator(
 		GameOver: { screen: GameOverScreen },
 		// ProfilePage: { screen: ProfilePageScreen },
 		LocationDetails: { screen: LocationDetailsScreen },
-		// Contact: { screen: ContactScreen },
+		Contact: { screen: ContactScreen },
 	},
-	{ initialRouteName: 'Contact' }
+	{ initialRouteName: 'Welcome' }
 );
 
 export default class App extends Component {
