@@ -40,9 +40,23 @@ export default class ActiveRoute extends Component {
 		);
 	};
 
+	uberTempMessage = () => {
+		alert('This feature is not set up yet.');
+	};
+
+	nextStopTempMessage = () => {
+		alert('This feature is not set up yet.');
+	};
+
 	render() {
 		return (
 			<View>
+				<Button block onPress={this.nextStopTempMessage}>
+					<Text>Directions to next stop</Text>
+				</Button>
+				<Button block onPress={this.uberTempMessage}>
+					<Text>Uber</Text>
+				</Button>
 				<Button block onPress={this.tapOutAlert}>
 					<Text>Tapout</Text>
 				</Button>
