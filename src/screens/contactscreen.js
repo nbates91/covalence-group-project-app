@@ -26,6 +26,7 @@ export default class ContactScreen extends Component {
 	render() {
 		return (
 			<ScrollView>
+				<Text>Please let us know of any issues/bugs that you may have encountered!</Text>
 				<FormLabel>Email</FormLabel>
 				<FormInput onChangeText={email => this.setState({ email })} />
 				<FormValidationMessage>Required</FormValidationMessage>
