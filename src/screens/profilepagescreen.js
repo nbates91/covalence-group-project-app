@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Button, Text } from 'native-base';
-import { SSL_OP_SSLREF2_REUSE_CERT_TYPE_BUG } from 'constants';
+// import { SSL_OP_SSLREF2_REUSE_CERT_TYPE_BUG } from 'constants';
 
 let hardCodedUserId = 1;
 

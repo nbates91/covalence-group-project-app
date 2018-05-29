@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Drawer } from 'native-base';
-import SideBar from './yourPathToSideBar';
+import SideBar from './sideBar';
+
 export default class HamburgerMenu extends Component {
 	render() {
 		closeDrawer = () => {

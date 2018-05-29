@@ -16,14 +16,17 @@ import ActiveRouteScreen from './src/screens/activeroutescreen';
 import GameOverScreen from './src/screens/gameoverscreen';
 import ProfilePageScreen from './src/screens/profilepagescreen';
 import LocationDetailsScreen from './src/screens/locationdetailsscreen';
+// import ContactScreen from './src/screens/contactscreen';
 
-const DrawerStack = DrawerNavigator({
-	Home: { screen: Homescreen },
-});
+// const DrawerStack = DrawerNavigator({
+// 	Home: { screen: Homescreen },
+// });
 
 const DrawerNavigation = StackNavigator(
 	{
-		DrawerStack: { screen: DrawerStack },
+		Home: { screen: Homescreen },
+		ActiveRoute: { screen: ActiveRouteScreen },
+		// DrawerStack: { screen: DrawerStack },
 	},
 	{
 		headerMode: 'float',
@@ -40,10 +43,11 @@ const RootNavigator = StackNavigator(
 		drawerStack: { screen: DrawerNavigation },
 		ActiveRoute: { screen: ActiveRouteScreen },
 		GameOver: { screen: GameOverScreen },
-		ProfilePage: { screen: ProfilePageScreen },
+		// ProfilePage: { screen: ProfilePageScreen },
 		LocationDetails: { screen: LocationDetailsScreen },
+		// Contact: { screen: ContactScreen },
 	},
-	{ initialRouteName: 'Welcome' }
+	{ initialRouteName: 'Contact' }
 );
 
 export default class App extends Component {
