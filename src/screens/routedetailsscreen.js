@@ -28,16 +28,13 @@ export default class RouteDetailsScreen extends Component {
 	}
 
 	render() {
+		let routeStops = this.state.stops.map((stop, index) => {
+			return <LocationCard key={index} stop={stop} navigation={this.props.navigation} />
+		})
 		return (
 			<ScrollView>
 				<Text>{this.routeName}</Text>
-				{this.state.stops.map((stop, index) => {
-					return (
-						<ScrollView>
-							<LocationCard key={index} stop={stop} navigation={this.props.navigation} />
-						</ScrollView>
-					);
-				})}
+				{routeStops}
 				<Button block onPress={() => this.switchScreens(this.props.navigation)}>
 					<Text>Select This Route!</Text>
 				</Button>
