@@ -6,7 +6,8 @@ export default class Homescreen extends Component {
 	static navigationOptions = ({ navigation }) => ({
 		title: 'Choose a Route!',
 		drawerLabel: "Home",
-		headerRight: <Text onPress={() => navigation.navigate('drawerStack')}>Menu</Text>,
+		headerRight: <Text onPress={() => navigation.navigate('DrawerOpen')}>Menu</Text>,
+		// headerRight: <Text onPress={() => navigation.navigate('drawerStack')}>Menu</Text>,
 	});
 
 	// static navigationOptions = {

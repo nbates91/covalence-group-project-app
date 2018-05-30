@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Button, Text } from 'native-base';
-// import { SSL_OP_SSLREF2_REUSE_CERT_TYPE_BUG } from 'constants';
+import * as baseService from '../services/base';
 
 let hardCodedUserId = 1;
 
@@ -13,6 +13,8 @@ export default class ProfilePageScreen extends Component {
 			profilePictureURL: '',
 			pictures: [],
 			user: null,
+			newPassword: "",
+			confirmPassword: ""
 		};
 	}
 
@@ -40,6 +42,7 @@ export default class ProfilePageScreen extends Component {
 			.then(user => {
 				this.setState({
 					userEmail: user.email,
+					user: user
 				});
 				this.getPictures();
 			})
@@ -49,14 +52,37 @@ export default class ProfilePageScreen extends Component {
 	}
 
 	updatePassword() {
-		let updatedUser = {
-			email: this.state.user.email,
-			hash: newPassword, // get the new password from input box
-			role: this.state.user.role,
-			level: this.state.user.level,
-			numberofcheckins: this.state.user.numberofcheckins,
-		};
-		// put new user to db
+	// still need to add requirements to passwords - even an empty password works right now...
+		if (this.state.newPassword === this.state.confirmPassword) {
+			let updatedUser = {
+				email: this.state.user.email,
+				hash: this.state.newPassword,
+				role: this.state.user.role,
+				level: this.state.user.level,
+				numberofcheckins: this.state.user.numberofcheckins,
+			};
+			fetch(`https://bham-hops.herokuapp.com/api/users/${hardCodedUserId}`,
+			{
+				method: "PUT",
+				body: JSON.stringify(updatedUser),
+				headers: new Headers({
+					'Content-Type': 'application/json',
+				}),
+			})
+			.then( (res) => {
+				this.setState({
+					newPassword: "",
+					confirmPassword: ""
+				});
+			})
+			.catch( (err) => {
+				console.log(err);
+			});
+			alert('Password was successfully changed!');
+		}
+		else {
+			alert('Passwords do not match!');
+		}
 	}
 
 	render() {
@@ -69,18 +95,17 @@ export default class ProfilePageScreen extends Component {
 						<Form>
 							<Item floatingLabel>
 								<Label>Password</Label>
-								<Input />
+								<Input secureTextEntry={true} onChangeText={(newPassword) => this.setState({newPassword})} value={this.state.newPassword}/>
 							</Item>
 							<Item floatingLabel last>
 								<Label>Confirm Password</Label>
-								<Input />
+								<Input secureTextEntry={true} onChangeText={(confirmPassword) => this.setState({confirmPassword})} value={this.state.confirmPassword}/>
 							</Item>
 							<Button
 								block
 								onPress={() => {
 									// save new password and show pop up confirmation
 									this.updatePassword();
-									alert('Password was successfully changed!');
 								}}
 							>
 								<Text>Update Password</Text>
