@@ -20,18 +20,18 @@ import ContactScreen from './src/screens/contactscreen';
 
 // const DrawerStack = DrawerNavigator({
 // 	Home: { screen: Homescreen },
+// 	ActiveRoute: { screen: ActiveRouteScreen },
 // });
 
-// const DrawerNavigation = StackNavigator(
-// 	{
-// 		Home: { screen: Homescreen },
-// 		ActiveRoute: { screen: ActiveRouteScreen },
-// 		// DrawerStack: { screen: DrawerStack },
-// 	},
-// 	{
-// 		headerMode: 'float',
-// 	}
-// );
+const DrawerNavigation = DrawerNavigator(
+	{
+		Home: { screen: Homescreen },
+		ActiveRoute: { screen: ActiveRouteScreen },
+	},
+	{
+		headerMode: 'float',
+	}
+);
 
 const RootNavigator = StackNavigator(
 	{
