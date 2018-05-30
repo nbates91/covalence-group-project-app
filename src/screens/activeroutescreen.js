@@ -13,6 +13,7 @@ export default class ActiveRoute extends Component {
 		};
 	}
 	componentWillMount() {
+		alert(this.id);
 		fetch(`https://bham-hops.herokuapp.com/api/routes/${this.id}`)
 			.then(res => {
 				return res.json();

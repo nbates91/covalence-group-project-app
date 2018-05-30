@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 import { Container, Header, Content, Form, Item, Input, Label, Button, Text } from 'native-base';
 
 export default class WelcomeScreen extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			email: '',
+			password: '',
+			confirmPass: ''
+		}
+	}
 	static navigationOptions = {
 		title: 'Sign up',
 	};
@@ -11,7 +19,7 @@ export default class WelcomeScreen extends Component {
 				<Content>
 					<Form>
 						<Item floatingLabel>
-							<Label>Username</Label>
+							<Label>Email</Label>
 							<Input />
 						</Item>
 						<Item floatingLabel last>
