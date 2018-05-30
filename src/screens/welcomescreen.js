@@ -8,7 +8,8 @@ export default class WelcomeScreen extends Component {
 	};
 
 	switchScreens(navigation) {
-		this.props.navigation.navigate('Home', { navigation });
+		this.props.navigation.navigate('DrawerStack');
+		// this.props.navigation.navigate('Home', { navigation });
 	}
 
 	render() {

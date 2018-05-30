@@ -11,7 +11,7 @@ export default class LocationCard extends Component {
 			<Card>
 				<CardItem button onPress={() => this.switchScreens(this.props.stop.stopid)}>
 					<Body>
-						<Text>{this.props.stop.stops}</Text>
+						<Text>{`Test- ${this.props.stop.stops}`}</Text>
 					</Body>
 				</CardItem>
 			</Card>

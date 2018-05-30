@@ -3,7 +3,7 @@ import { Button, Card, CardItem, Text, Body } from 'native-base';
 
 export default class RoutesCard extends Component {
 	switchScreens(id, routename) {
-		this.props.navigation.navigate('RouteDetailsScreen', { id, routename });
+		this.props.navigation.navigate('RouteDetails', { id, routename });
 	}
 
 	render() {

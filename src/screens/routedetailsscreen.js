@@ -24,13 +24,14 @@ export default class RouteDetailsScreen extends Component {
 	}
 
 	switchScreens(navigation) {
-		this.props.navigation.navigate('ActiveRoute', { navigation });
+		let id = this.id;
+		this.props.navigation.navigate('ActiveRoute', { id });
 	}
 
 	render() {
 		let routeStops = this.state.stops.map((stop, index) => {
-			return <LocationCard key={index} stop={stop} navigation={this.props.navigation} />
-		})
+			return <LocationCard key={stop.stopid} stop={stop} navigation={this.props.navigation} />;
+		});
 		return (
 			<ScrollView>
 				<Text>{this.routeName}</Text>

@@ -6,6 +6,19 @@ import * as baseService from '../services/base';
 let hardCodedUserId = 1;
 
 export default class ProfilePageScreen extends Component {
+	static navigationOptions = ({ navigation }) => ({
+		title: 'Choose a Route!',
+		headerRight: (
+			<Text
+				onPress={() => {
+					navigation.toggleDrawer();
+				}}
+			>
+				Menu
+			</Text>
+		),
+	});
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -13,8 +26,8 @@ export default class ProfilePageScreen extends Component {
 			profilePictureURL: '',
 			pictures: [],
 			user: null,
-			newPassword: "",
-			confirmPassword: ""
+			newPassword: '',
+			confirmPassword: '',
 		};
 	}
 
@@ -42,7 +55,7 @@ export default class ProfilePageScreen extends Component {
 			.then(user => {
 				this.setState({
 					userEmail: user.email,
-					user: user
+					user: user,
 				});
 				this.getPictures();
 			})
@@ -52,7 +65,7 @@ export default class ProfilePageScreen extends Component {
 	}
 
 	updatePassword() {
-	// still need to add requirements to passwords - even an empty password works right now...
+		// still need to add requirements to passwords - even an empty password works right now...
 		if (this.state.newPassword === this.state.confirmPassword) {
 			let updatedUser = {
 				email: this.state.user.email,
@@ -61,26 +74,24 @@ export default class ProfilePageScreen extends Component {
 				level: this.state.user.level,
 				numberofcheckins: this.state.user.numberofcheckins,
 			};
-			fetch(`https://bham-hops.herokuapp.com/api/users/${hardCodedUserId}`,
-			{
-				method: "PUT",
+			fetch(`https://bham-hops.herokuapp.com/api/users/${hardCodedUserId}`, {
+				method: 'PUT',
 				body: JSON.stringify(updatedUser),
 				headers: new Headers({
 					'Content-Type': 'application/json',
 				}),
 			})
-			.then( (res) => {
-				this.setState({
-					newPassword: "",
-					confirmPassword: ""
+				.then(res => {
+					this.setState({
+						newPassword: '',
+						confirmPassword: '',
+					});
+				})
+				.catch(err => {
+					console.log(err);
 				});
-			})
-			.catch( (err) => {
-				console.log(err);
-			});
 			alert('Password was successfully changed!');
-		}
-		else {
+		} else {
 			alert('Passwords do not match!');
 		}
 	}
@@ -95,11 +106,19 @@ export default class ProfilePageScreen extends Component {
 						<Form>
 							<Item floatingLabel>
 								<Label>Password</Label>
-								<Input secureTextEntry={true} onChangeText={(newPassword) => this.setState({newPassword})} value={this.state.newPassword}/>
+								<Input
+									secureTextEntry={true}
+									onChangeText={newPassword => this.setState({ newPassword })}
+									value={this.state.newPassword}
+								/>
 							</Item>
 							<Item floatingLabel last>
 								<Label>Confirm Password</Label>
-								<Input secureTextEntry={true} onChangeText={(confirmPassword) => this.setState({confirmPassword})} value={this.state.confirmPassword}/>
+								<Input
+									secureTextEntry={true}
+									onChangeText={confirmPassword => this.setState({ confirmPassword })}
+									value={this.state.confirmPassword}
+								/>
 							</Item>
 							<Button
 								block

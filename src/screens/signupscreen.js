@@ -7,8 +7,8 @@ export default class WelcomeScreen extends Component {
 		this.state = {
 			email: '',
 			password: '',
-			confirmPass: ''
-		}
+			confirmPass: '',
+		};
 	}
 	static navigationOptions = {
 		title: 'Sign up',
@@ -24,11 +24,11 @@ export default class WelcomeScreen extends Component {
 						</Item>
 						<Item floatingLabel last>
 							<Label>Password</Label>
-							<Input />
+							<Input secureTextEntry={true} />
 						</Item>
 						<Item floatingLabel last>
 							<Label>Confirm Password</Label>
-							<Input />
+							<Input secureTextEntry={true} />
 						</Item>
 						<Button
 							block
