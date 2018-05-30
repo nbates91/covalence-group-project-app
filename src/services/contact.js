@@ -1,11 +1,11 @@
-import * as baseService from './base';
+// import * as baseService from './base';
 
-function sendContactEmail(name, email, message) {
-	return baseService.post('/api/contact', {
-		name,
-		email,
-		message,
-	});
-}
+// function sendContactEmail(name, email, message) {
+// 	return baseService.post('/api/contact', {
+// 		name,
+// 		email,
+// 		message,
+// 	});
+// }
 
-export { sendContactEmail };
+// export { sendContactEmail };

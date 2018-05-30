@@ -22,16 +22,16 @@ import LocationDetailsScreen from './src/screens/locationdetailsscreen';
 // 	Home: { screen: Homescreen },
 // });
 
-const DrawerNavigation = StackNavigator(
-	{
-		Home: { screen: Homescreen },
-		ActiveRoute: { screen: ActiveRouteScreen },
-		// DrawerStack: { screen: DrawerStack },
-	},
-	{
-		headerMode: 'float',
-	}
-);
+// const DrawerNavigation = StackNavigator(
+// 	{
+// 		Home: { screen: Homescreen },
+// 		ActiveRoute: { screen: ActiveRouteScreen },
+// 		// DrawerStack: { screen: DrawerStack },
+// 	},
+// 	{
+// 		headerMode: 'float',
+// 	}
+// );
 
 const RootNavigator = StackNavigator(
 	{
@@ -40,14 +40,14 @@ const RootNavigator = StackNavigator(
 		SignUp: { screen: SignUpScreen },
 		Home: { screen: Homescreen },
 		RouteDetailsScreen: { screen: RouteDetailsScreen },
-		drawerStack: { screen: DrawerNavigation },
+		// drawerStack: { screen: DrawerNavigation },
 		ActiveRoute: { screen: ActiveRouteScreen },
 		GameOver: { screen: GameOverScreen },
 		// ProfilePage: { screen: ProfilePageScreen },
 		LocationDetails: { screen: LocationDetailsScreen },
 		// Contact: { screen: ContactScreen },
 	},
-	{ initialRouteName: 'Contact' }
+	{ initialRouteName: 'Welcome' }
 );
 
 export default class App extends Component {

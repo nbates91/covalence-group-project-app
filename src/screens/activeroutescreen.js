@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Alert } from 'react-native';
 import { Button, Text } from 'native-base';
+import LocationCard from '../components/locationcard';
 
 export default class ActiveRoute extends Component {
 	constructor(props) {
@@ -12,7 +13,7 @@ export default class ActiveRoute extends Component {
 		};
 	}
 	componentWillMount() {
-		fetch('https://bham-hops.herokuapp.com/api/routes/1')
+		fetch(`https://bham-hops.herokuapp.com/api/routes/${this.id}`)
 			.then(res => {
 				return res.json();
 			})
@@ -24,7 +25,7 @@ export default class ActiveRoute extends Component {
 			});
 	}
 	// componentDidMount() {
-	// 	fetch(`api/routes/stops/${this.id}`)
+	// 	fetch(`api/routes/stops/1`)
 	// 		.then(res => {
 	// 			return res.json();
 	// 		})
@@ -55,10 +56,17 @@ export default class ActiveRoute extends Component {
 		alert('This feature is not set up yet.');
 	};
 
+	checkInTempMessage = () => {
+		alert('This feature is not set up yet.');
+	};
+
 	render() {
 		return (
 			<View>
-				<Text>{this.state.route.name}</Text>
+				<Text>{this.state.route.routename}</Text>
+				<Button block onPress={this.checkInTempMessage}>
+					<Text>Check in at current stop</Text>
+				</Button>
 				<Button block onPress={this.nextStopTempMessage}>
 					<Text>Directions to next stop</Text>
 				</Button>
