@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
-import { StackNavigator, DrawerNavigator } from 'react-navigation';
+import { StackNavigator, DrawerNavigator, SwitchNavigator } from 'react-navigation';
 import WelcomeScreen from './src/screens/welcomescreen';
 import Homescreen from './src/screens/homescreen';
 import SignInScreen from './src/screens/signinscreen';
@@ -27,6 +27,7 @@ const DrawerNavigation = DrawerNavigator(
 	{
 		Home: { screen: Homescreen },
 		ActiveRoute: { screen: ActiveRouteScreen },
+		// other menu options...
 	},
 	{
 		headerMode: 'float',
@@ -40,18 +41,26 @@ const RootNavigator = StackNavigator(
 		SignUp: { screen: SignUpScreen },
 		Home: { screen: Homescreen },
 		RouteDetailsScreen: { screen: RouteDetailsScreen },
-		drawerStack: { screen: DrawerNavigation },
+		// drawerStack: { screen: DrawerNavigation },
 		ActiveRoute: { screen: ActiveRouteScreen },
 		GameOver: { screen: GameOverScreen },
-		// ProfilePage: { screen: ProfilePageScreen },
+		ProfilePage: { screen: ProfilePageScreen },
 		LocationDetails: { screen: LocationDetailsScreen },
 		// Contact: { screen: ContactScreen },
 	},
-	{ initialRouteName: 'Welcome' }
+	{ initialRouteName: 'ProfilePage' }
+);
+
+const PrimaryNavigation = SwitchNavigator({
+	rootStack: { screen: RootNavigator },
+	drawerStack: { screen: DrawerNavigation }
+  }, 
+  { initialRouteName: 'rootStack' }
 );
 
 export default class App extends Component {
 	render() {
-		return <RootNavigator />;
+		return <PrimaryNavigation />;
+		// return <RootNavigator />;
 	}
 }
