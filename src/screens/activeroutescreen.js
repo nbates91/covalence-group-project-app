@@ -8,7 +8,7 @@ export default class ActiveRoute extends Component {
 		super(props);
 		// this.navigation = this.props.navigation.state.params.navigation;
 		// alert(this.props.navigation.state.params);
-		// this.id = this.props.navigation.state.params.id;
+		this.id = this.props.navigation.state.params.id;
 		this.state = {
 			route: [],
 			stops: [],

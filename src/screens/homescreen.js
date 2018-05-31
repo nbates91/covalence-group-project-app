@@ -45,7 +45,7 @@ export default class Homescreen extends Component {
 				{/* <Button title="Menu" onPress={() => this.props.navigation.navigate('DrawerOpen')}/> */}
 				{this.state.routes.map((route, index) => {
 					return (
-						<RoutesCard key={index} route={route} navigation={this.props.navigation} id={route.routeid} />
+						<RoutesCard key={index} route={route} id={route.routeid} />
 					);
 				})}
 			</ScrollView>

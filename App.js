@@ -15,7 +15,7 @@ const PrimaryNavigation = SwitchNavigator(
 		SignIn: { screen: SignInNavigator },
 		DrawerStack: DrawerNavigation,
 	},
-	{ initialRouteName: 'SignIn' }
+	{ initialRouteName: 'DrawerStack' }
 );
 
 export default class App extends Component {

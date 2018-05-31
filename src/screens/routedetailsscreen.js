@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
 import { Button, Text } from 'native-base';
 import LocationCard from '../components/locationcard';
+import { NavigationActions } from 'react-navigation';
 
 export default class RouteDetailsScreen extends Component {
 	constructor(props) {
@@ -23,21 +24,30 @@ export default class RouteDetailsScreen extends Component {
 		}
 	}
 
-	switchScreens(navigation) {
+	switchScreens() {
 		let id = this.id;
 		// alert(this.props.navigation.params);
-		this.props.navigation.navigate('ActiveRoute', { navigation, id });
+		alert(JSON.stringify(this.props.navigation));
+
+		this.props.navigation.navigate({
+			routeName: 'ActiveRoute', 
+			params: {},
+			action: NavigationActions.navigate({ 
+				routeName: 'ActiveRouteDetail',
+				params: { id },
+			})
+		});
 	}
 
 	render() {
 		let routeStops = this.state.stops.map((stop, index) => {
-			return <LocationCard key={stop.stopid} stop={stop} navigation={this.props.navigation} />;
+			return <LocationCard key={stop.stopid} stop={stop} />;
 		});
 		return (
 			<ScrollView>
 				<Text>{this.routeName}</Text>
 				{routeStops}
-				<Button block onPress={() => this.switchScreens(this.props.navigation)}>
+				<Button block onPress={() => this.switchScreens()}>
 					<Text>Select This Route!</Text>
 				</Button>
 			</ScrollView>

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Card, CardItem, Text, Body } from 'native-base';
+import { withNavigation } from 'react-navigation';
 
-export default class LocationCard extends Component {
+class LocationCard extends Component {
 	switchScreens(id) {
 		this.props.navigation.navigate('LocationDetails', { id });
 	}
@@ -18,3 +19,5 @@ export default class LocationCard extends Component {
 		);
 	}
 }
+
+export default withNavigation(LocationCard);
