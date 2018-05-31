@@ -10,9 +10,6 @@ const DrawerNavigation = createDrawerNavigator(
 		ActiveRoute: ActiveRouteDetailsNavigator,
 		ProfilePage: ProfilePageNavigator,
 		Contact: ContactNavigator,
-	},
-	{
-		headerMode: 'float',
 	}
 );
 

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Button, Card, CardItem, Text, Body } from 'native-base';
+import { withNavigation } from 'react-navigation';
 
-export default class RoutesCard extends Component {
+class RoutesCard extends Component {
 	switchScreens(id, routename, navigation) {
 		// alert(navigation.params);
-		this.props.navigation.navigate('RouteDetails', { id, routename, navigation });
+		this.props.navigation.navigate('RouteDetails', { id, routename });
 	}
 
 	render() {
@@ -20,3 +21,5 @@ export default class RoutesCard extends Component {
 		);
 	}
 }
+
+export default withNavigation(RoutesCard);
