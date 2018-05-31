@@ -24,7 +24,6 @@ export default class Homescreen extends Component {
 	constructor(props) {
 		super(props);
 		// this.navigation = this.props.navigation.state.params.navigation;
-		// alert(this.navigation.navigate);
 		this.state = {
 			routes: [],
 		};
