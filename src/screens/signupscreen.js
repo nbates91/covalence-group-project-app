@@ -38,14 +38,14 @@ export default class WelcomeScreen extends Component {
 						>
 							<Text>Create Account</Text>
 						</Button>
-						<Button
+						{/* <Button
 							block
 							onPress={() => {
 								this.props.navigation.navigate('Welcome');
 							}}
 						>
 							<Text>Cancel</Text>
-						</Button>
+						</Button> */}
 					</Form>
 				</Content>
 			</Container>

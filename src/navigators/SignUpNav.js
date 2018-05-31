@@ -1,12 +1,12 @@
-import { createStackNavigator } from 'react-navigation';
-import SignUpScreen from '../screens/signupscreen';
-import HomeNavigator from './HomeNav';
-import WelcomeNavigator from './WelcomeNav';
+// import { createStackNavigator } from 'react-navigation';
+// import SignUpScreen from '../screens/signupscreen';
+// import SignInScreen from '../screens/signinscreen';
+// import HomeNavigator from './HomeNav';
 
-const SignUpNavigator = createStackNavigator({
-	SignUp: { screen: SignUpScreen },
-	Home: { screen: HomeNavigator },
-	Welcome: { screen: WelcomeNavigator },
-});
+// const SignUpNavigator = createStackNavigator({
+// 	SignIn: { screen: SignInScreen },
+// 	SignUp: { screen: SignUpScreen },
+// 	Home: { screen: HomeNavigator },
+// });
 
-export default SignUpNavigator;
+// export default SignUpNavigator;

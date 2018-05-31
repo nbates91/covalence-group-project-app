@@ -7,15 +7,15 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import { SwitchNavigator } from 'react-navigation';
-import WelcomeNavigator from './src/navigators/WelcomeNav';
+import SignInNavigator from './src/navigators/SignInNav';
 import DrawerNavigation from './src/navigators/DrawerNav';
 
 const PrimaryNavigation = SwitchNavigator(
 	{
-		Welcome: { screen: WelcomeNavigator },
+		SignIn: { screen: SignInNavigator },
 		DrawerStack: DrawerNavigation,
 	},
-	{ initialRouteName: 'Welcome' }
+	{ initialRouteName: 'SignIn' }
 );
 
 export default class App extends Component {

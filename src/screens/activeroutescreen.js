@@ -6,8 +6,9 @@ import LocationCard from '../components/locationcard';
 export default class ActiveRoute extends Component {
 	constructor(props) {
 		super(props);
-
-		this.id = this.props.navigation.state.params.id;
+		// this.navigation = this.props.navigation.state.params.navigation;
+		// alert(this.props.navigation.state.params);
+		// this.id = this.props.navigation.state.params.id;
 		this.state = {
 			route: [],
 			stops: [],

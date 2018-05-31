@@ -1,14 +1,16 @@
 import { createStackNavigator } from 'react-navigation';
 import RouteDetailsScreen from '../screens/routedetailsscreen';
-import ActiveRouteDetailsNavigator from './ActiveRouteDetailsNav';
+import ActiveRouteScreen from '../screens/activeroutescreen';
+// import ActiveRouteDetailsNavigator from './ActiveRouteDetailsNav';
 import LocationDetailsNavigator from './LocationDetailsNav';
-import WelcomeNavigator from './WelcomeNav';
+// import WelcomeNavigator from './WelcomeNav';
 
 const RouteDetailsNavigator = createStackNavigator({
 	RouteDetails: { screen: RouteDetailsScreen },
-	ActiveRoute: { screen: ActiveRouteDetailsNavigator },
+	ActiveRoute: { screen: ActiveRouteScreen },
+	// ActiveRoute: ActiveRouteDetailsNavigator,
 	LocationDetails: { screen: LocationDetailsNavigator },
-	Welcome: { screen: WelcomeNavigator },
+	// Welcome: { screen: WelcomeNavigator },
 });
 
 export default RouteDetailsNavigator;

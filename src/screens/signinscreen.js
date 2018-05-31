@@ -66,7 +66,11 @@ export default class SignInScreen extends Component {
 						>
 							<Text>Sign In</Text>
 						</Button>
-						<Button
+						<Text> Don't have an account yet? </Text>
+						<Button block onPress={() => this.props.navigation.navigate('SignUp')}>
+							<Text>Sign Up</Text>
+						</Button>
+						{/* <Button
 							block
 							onPress={() => {
 								login();
@@ -74,7 +78,7 @@ export default class SignInScreen extends Component {
 							}}
 						>
 							<Text>Cancel</Text>
-						</Button>
+						</Button> */}
 					</Form>
 				</Content>
 			</Container>

@@ -7,7 +7,7 @@ let hardCodedUserId = 1;
 
 export default class ProfilePageScreen extends Component {
 	static navigationOptions = ({ navigation }) => ({
-		title: 'Choose a Route!',
+		// title: 'Choose a Route!',
 		headerRight: (
 			<Text
 				onPress={() => {
