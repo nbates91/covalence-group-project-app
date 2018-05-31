@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView, Text, Button, Linking } from 'react-native';
 
 export default class LocationDetails extends Component {
 	constructor(props) {
@@ -23,14 +23,21 @@ export default class LocationDetails extends Component {
 			});
 	}
 
+	getLocationDetail = () => {
+		Linking.openURL(
+			`https://www.google.com/maps/place/${this.state.location.name}/@${this.state.location.latitude},${
+				this.state.location.longitude
+			},19z`
+		).catch(err => console.error('An error occurred', err));
+	};
+
 	render() {
 		return (
 			<ScrollView>
 				<Text>{this.state.location.name}</Text>
-				<Text>
-					{this.state.location.latitude}, {this.state.location.longitude}
-				</Text>
+				<Text>THIS IS FILLER FOR THE DESCRIPTION</Text>
 				<Text>{this.state.location.url}</Text>
+				<Button onPress={() => this.getLocationDetail()} title="More Details" />
 			</ScrollView>
 		);
 	}

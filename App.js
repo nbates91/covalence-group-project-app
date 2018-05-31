@@ -9,18 +9,18 @@ import { Platform, StyleSheet, Text, View } from 'react-native';
 import { SwitchNavigator } from 'react-navigation';
 import SignInNavigator from './src/navigators/SignInNav';
 import DrawerNavigation from './src/navigators/DrawerNav';
+import * as userService from './src/services/user';
 
 const PrimaryNavigation = SwitchNavigator(
 	{
 		SignIn: { screen: SignInNavigator },
 		DrawerStack: DrawerNavigation,
 	},
-	{ initialRouteName: 'DrawerStack' }
+	{ initialRouteName: userService.isLoggedIn() ? 'DrawerStack' : 'SignIn' }
 );
 
 export default class App extends Component {
 	render() {
 		return <PrimaryNavigation />;
-		// return <RootNavigator />;
 	}
 }

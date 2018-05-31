@@ -1,8 +1,5 @@
 import { createStackNavigator } from 'react-navigation';
-import LocationDetailsScreen from '../screens/locationdetailsscreen';
 
-const LocationDetailsNavigator = createStackNavigator({
-	LocationDetails: { screen: LocationDetailsScreen },
-});
+const LocationDetailsNavigator = createStackNavigator({});
 
 export default LocationDetailsNavigator;

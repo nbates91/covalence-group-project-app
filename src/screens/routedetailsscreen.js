@@ -27,15 +27,15 @@ export default class RouteDetailsScreen extends Component {
 	switchScreens() {
 		let id = this.id;
 		// alert(this.props.navigation.params);
-		alert(JSON.stringify(this.props.navigation));
+		// alert(JSON.stringify(this.props.navigation));
 
 		this.props.navigation.navigate({
-			routeName: 'ActiveRoute', 
+			routeName: 'ActiveRoute',
 			params: {},
-			action: NavigationActions.navigate({ 
+			action: NavigationActions.navigate({
 				routeName: 'ActiveRouteDetail',
 				params: { id },
-			})
+			}),
 		});
 	}
 

@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
-import { View, Alert, ScrollView, Linking } from 'react-native';
+import { View, Alert, ScrollView, Linking, AsyncStorage } from 'react-native';
 import { Button, Text, Container } from 'native-base';
 import LocationCard from '../components/locationcard';
 
 export default class ActiveRoute extends Component {
+	static navigationOptions = ({ navigation }) => ({
+		headerRight: (
+			<Text
+				onPress={() => {
+					navigation.toggleDrawer();
+				}}
+			>
+				Menu
+			</Text>
+		),
+	});
 	constructor(props) {
 		super(props);
 		// this.navigation = this.props.navigation.state.params.navigation;
@@ -12,6 +23,7 @@ export default class ActiveRoute extends Component {
 		this.state = {
 			route: [],
 			stops: [],
+			userID: null,
 		};
 	}
 	componentWillMount() {
@@ -36,7 +48,6 @@ export default class ActiveRoute extends Component {
 				return res.json();
 			})
 			.then(stops => {
-				// alert(stops);
 				this.setState({ stops });
 			})
 			.catch(err => {
@@ -55,53 +66,101 @@ export default class ActiveRoute extends Component {
 		);
 	};
 
-	getRide = () => {
-		Linking.openURL(
-			'uber://?client_id=<CLIENT_ID>&action=setPickup=my_location&pickup[nickname]=UberHQ&pickup[formatted_address]=1455%20Market%20St%2C%20San%20Francisco%2C%20CA%2094103&dropoff[latitude]=33.5156832&dropoff[longitude]=-86.8063203&dropoff[nickname]=Coit%20Tower&dropoff[formatted_address]=1%20Telegraph%20Hill%20Blvd%2C%20San%20Francisco%2C%20CA%2094133&product_id=a1111c8c-c720-46c3-8534-2fcdd730040d&link_text=View%20team%20roster&partner_deeplink=partner%3A%2F%2Fteam%2F9383'
-		).catch(err => console.error('An error occurred', err));
-	};
-
-	getDirections = () => {
-		Linking.openURL('https://www.google.com/maps/dir/?api=1&parameters').catch(err =>
-			console.error('An error occurred', err)
-		);
-	};
-
-	// uberTempMessage = () => {
-	// 	alert('This feature is not set up yet.');
-	// };
-
-	// nextStopTempMessage = () => {
-	// 	alert('This feature is not set up yet.');
-	// };
-
-	checkInTempMessage = () => {
-		alert('This feature is not set up yet.');
-	};
-
-	render() {
-		// alert(this.state.stops.length);
-		let routeStops = this.state.stops.map((stop, index) => {
-			// alert(JSON.stringify(stop));
-			return <LocationCard key={stop.stopid} stop={stop} navigation={this.props.navigation} />;
-		});
-		return (
-			<ScrollView>
-				<Text>{this.state.route.routename}</Text>
-				{routeStops}
-				<Button block onPress={this.checkInTempMessage}>
-					<Text>Check in at current stop</Text>
-				</Button>
-				<Button block onPress={this.getDirections}>
-					<Text>Directions to next stop</Text>
-				</Button>
-				<Button block onPress={this.getRide}>
-					<Text>Uber</Text>
-				</Button>
-				<Button block onPress={this.tapOutAlert}>
-					<Text>Tapout</Text>
-				</Button>
-			</ScrollView>
-		);
+	getNumberOfCheckins() {
+		AsyncStorage.getItem('user')
+			.then(userID => {
+				fetch(`https://bham-hops.herokuapp.com/api/users/${userID}`)
+					.then(res => {
+						this.setState({ userID });
+						return res.json();
+					})
+					.then(user => {
+						return user.numberofcheckins;
+					})
+					.catch(err => {
+						console.log(err);
+					});
+			})
+			.catch(err => {
+				console.log(err);
+			});
 	}
+
+	checkIn(withPicture) {
+		this.getNumberOfCheckins();
+		fetch(`https://bham-hops.herokuapp.com/api/users/${hardCodedUserId}`, {
+			method: 'PUT',
+			body: JSON.stringify(updatedUser),
+			headers: new Headers({
+				'Content-Type': 'application/json',
+			}),
+		})
+			.then(res => {
+				this.setState({
+					newPassword: '',
+					confirmPassword: '',
+				});
+			})
+			.catch(err => {
+				console.log(err);
+			}); withPicture) {
+			this.props.navigation.navigate('Camera');
+		}
+
+		checkInAlert() {
+			Alert.alert(
+				'Check-in',
+				'With or without a picture?',
+				[
+					{ text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+					{ text: 'With Picture', onPress: () => this.checkIn(true) },
+					{ text: 'Without Picture', onPress: () => this.checkIn(false), style: 'cancel' },
+				],
+				{ cancelable: false }
+			);
+		}
+
+		getRide = () => {
+			Linking.openURL('https://m.uber.com').catch(err => console.error('An error occurred', err));
+		};
+
+		getDirections = () => {
+			Linking.openURL('https://www.google.com/maps/dir/?api=1&parameters').catch(err =>
+				console.error('An error occurred', err)
+			);
+		};
+
+		render() {
+			let routeStops = this.state.stops.map((stop, index) => {
+				return <LocationCard key={stop.stopid} stop={stop} navigation={this.props.navigation} />;
+			});
+			return (
+				<ScrollView>
+					<Text>{this.state.route.routename}</Text>
+					{routeStops}
+					<Button
+						block
+						onPress={() => {
+							this.checkInAlert();
+							// this.props.navigation.navigate('Camera');
+						}}
+					>
+						<Text>Check in at current stop</Text>
+					</Button>
+					<Button block onPress={this.getDirections}>
+						<Text>Directions to next stop</Text>
+					</Button>
+					<Button block onPress={this.getRide}>
+						<Text>Uber</Text>
+					</Button>
+					<Button block onPress={this.tapOutAlert}>
+						<Text>Tapout</Text>
+					</Button>
+				</ScrollView>
+			);
+		}
+	}
+}}}
+
+
 }

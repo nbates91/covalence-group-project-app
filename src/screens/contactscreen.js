@@ -4,6 +4,18 @@ import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-nativ
 import { sendContactEmail } from '../services/contact';
 
 export default class ContactScreen extends Component {
+	static navigationOptions = ({ navigation }) => ({
+		headerRight: (
+			<Text
+				onPress={() => {
+					navigation.toggleDrawer();
+				}}
+			>
+				Menu
+			</Text>
+		),
+	});
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -14,13 +26,21 @@ export default class ContactScreen extends Component {
 	}
 
 	handleSubmit() {
-		sendContactEmail(this.state.name, this.state.email, this.state.message)
-			.then(() => {
-				alert('Thank you, your feedback means a lot to us!');
-			})
-			.catch(err => {
-				console.log(err);
-			});
+		if (this.state.email === '') {
+			alert('The Email provided is not a valid email address.');
+		} else if (this.state.name === '') {
+			alert('The Name Field cannot be empty');
+		} else if (this.state.message === '') {
+			alert('There is nothing in the message field');
+		} else {
+			sendContactEmail(this.state.name, this.state.email, this.state.message)
+				.then(() => {
+					alert('Thank you, your feedback means a lot to us!');
+				})
+				.catch(err => {
+					console.log(err);
+				});
+		}
 	}
 
 	render() {
@@ -36,10 +56,7 @@ export default class ContactScreen extends Component {
 				<FormLabel>Message</FormLabel>
 				<FormInput onChangeText={message => this.setState({ message })} />
 				<FormValidationMessage>Required</FormValidationMessage>
-				<Button
-					title="Submit Feedback"
-					onPress={() => this.handleSubmit()}
-				/>
+				<Button title="Submit Feedback" onPress={() => this.handleSubmit()} />
 			</ScrollView>
 		);
 	}

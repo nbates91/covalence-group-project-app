@@ -33,8 +33,8 @@ export default class SignInScreen extends Component {
 			})
 			.catch(err => {
 				if (err.message) {
-					alert(err.message);
 					this.setState({ feedbackMessage: err.message });
+					alert(err.message);
 				}
 			});
 	}
