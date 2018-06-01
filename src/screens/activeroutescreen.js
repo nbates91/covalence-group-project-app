@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { View, Alert, ScrollView, Linking, AsyncStorage } from 'react-native';
 import { Button, Text, Container } from 'native-base';
 import LocationCard from '../components/locationcard';
+import { NavigationActions } from 'react-navigation';
 
 export default class ActiveRoute extends Component {
 	static navigationOptions = ({ navigation }) => ({
+		// headerTitle: "Active Crawl",
+		// drawerLabel: <Text> Active Crawl </Text>,
 		headerRight: (
 			<Text
 				onPress={() => {
@@ -15,17 +18,19 @@ export default class ActiveRoute extends Component {
 			</Text>
 		),
 	});
+
 	constructor(props) {
 		super(props);
-		// this.navigation = this.props.navigation.state.params.navigation;
-		// alert(this.props.navigation.state.params);
 		this.id = this.props.navigation.state.params.id;
 		this.state = {
 			route: [],
 			stops: [],
 			userID: null,
+			user: null,
+			numberofcheckins: null
 		};
 	}
+
 	componentWillMount() {
 		// alert(this.id);
 		fetch(`https://bham-hops.herokuapp.com/api/routes/${this.id}`)
@@ -42,6 +47,7 @@ export default class ActiveRoute extends Component {
 				console.log(err);
 			});
 	}
+
 	getStops() {
 		return fetch(`https://bham-hops.herokuapp.com/api/routes/stops/${this.id}`)
 			.then(res => {
@@ -54,19 +60,31 @@ export default class ActiveRoute extends Component {
 				console.log(err);
 			});
 	}
+
+	navigateToGameOver() {
+		this.props.navigation.navigate({
+			routeName: 'ActiveRoute',
+			params: {},
+			action: NavigationActions.navigate({
+				routeName: 'GameOver',
+				params: {},
+			}),
+		});
+	}
+
 	tapOutAlert = () => {
 		Alert.alert(
 			'Tapout',
 			'Are you sure?',
 			[
 				{ text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-				{ text: 'OK', onPress: () => this.props.navigation.navigate('GameOver') },
+				{ text: 'OK', onPress: () => this.navigateToGameOver() },
 			],
 			{ cancelable: false }
 		);
-	};
+	}
 
-	getNumberOfCheckins() {
+	checkIn(withPictureBoolean) {
 		AsyncStorage.getItem('user')
 			.then(userID => {
 				fetch(`https://bham-hops.herokuapp.com/api/users/${userID}`)
@@ -75,7 +93,12 @@ export default class ActiveRoute extends Component {
 						return res.json();
 					})
 					.then(user => {
-						return user.numberofcheckins;
+						this.setState({
+							user: user,
+							numberofcheckins: user.numberofcheckins
+						});
+						this.state.user.numberofcheckins += 1;
+						this.updateUserCheckins(withPictureBoolean);
 					})
 					.catch(err => {
 						console.log(err);
@@ -86,81 +109,68 @@ export default class ActiveRoute extends Component {
 			});
 	}
 
-	checkIn(withPicture) {
-		this.getNumberOfCheckins();
-		fetch(`https://bham-hops.herokuapp.com/api/users/${hardCodedUserId}`, {
+	updateUserCheckins(withPictureBoolean) {
+		fetch(`https://bham-hops.herokuapp.com/api/users/${this.state.userID}`, {
 			method: 'PUT',
-			body: JSON.stringify(updatedUser),
+			body: JSON.stringify(this.state.user),
 			headers: new Headers({
 				'Content-Type': 'application/json',
 			}),
 		})
-			.then(res => {
-				this.setState({
-					newPassword: '',
-					confirmPassword: '',
-				});
-			})
-			.catch(err => {
-				console.log(err);
-			}); withPicture) {
-			this.props.navigation.navigate('Camera');
-		}
-
-		checkInAlert() {
-			Alert.alert(
-				'Check-in',
-				'With or without a picture?',
-				[
-					{ text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-					{ text: 'With Picture', onPress: () => this.checkIn(true) },
-					{ text: 'Without Picture', onPress: () => this.checkIn(false), style: 'cancel' },
-				],
-				{ cancelable: false }
-			);
-		}
-
-		getRide = () => {
-			Linking.openURL('https://m.uber.com').catch(err => console.error('An error occurred', err));
-		};
-
-		getDirections = () => {
-			Linking.openURL('https://www.google.com/maps/dir/?api=1&parameters').catch(err =>
-				console.error('An error occurred', err)
-			);
-		};
-
-		render() {
-			let routeStops = this.state.stops.map((stop, index) => {
-				return <LocationCard key={stop.stopid} stop={stop} navigation={this.props.navigation} />;
-			});
-			return (
-				<ScrollView>
-					<Text>{this.state.route.routename}</Text>
-					{routeStops}
-					<Button
-						block
-						onPress={() => {
-							this.checkInAlert();
-							// this.props.navigation.navigate('Camera');
-						}}
-					>
-						<Text>Check in at current stop</Text>
-					</Button>
-					<Button block onPress={this.getDirections}>
-						<Text>Directions to next stop</Text>
-					</Button>
-					<Button block onPress={this.getRide}>
-						<Text>Uber</Text>
-					</Button>
-					<Button block onPress={this.tapOutAlert}>
-						<Text>Tapout</Text>
-					</Button>
-				</ScrollView>
-			);
-		}
+		.then( (res) => {
+			if (withPictureBoolean) {
+				this.props.navigation.navigate("Camera");
+			}
+		})
+		.catch(err => {
+			console.log(err);
+		}); 
 	}
-}}}
 
+	checkInAlert() {
+		Alert.alert(
+			'Check-in',
+			'With or without a picture?',
+			[
+				{ text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+				{ text: 'With Picture', onPress: () => this.checkIn(true) },
+				{ text: 'Without Picture', onPress: () => this.checkIn(false), style: 'cancel' },
+			],
+				{ cancelable: false }
+		);
+	}
 
+	getRide = () => {
+		Linking.openURL('https://m.uber.com').catch(err => console.error('An error occurred', err));
+	};
+
+	getDirections = () => {
+		Linking.openURL('https://www.google.com/maps/dir/?api=1&parameters').catch(err =>
+			console.error('An error occurred', err)
+		);
+	};
+
+	render() {
+		let routeStops = this.state.stops.map((stop, index) => {
+			return <LocationCard key={stop.stopid} stop={stop} navigation={this.props.navigation} />;
+		});
+		return (
+			<ScrollView>
+				<Text>{this.state.route.routename}</Text>
+				{routeStops}
+				<Button block onPress={() => { this.checkInAlert(); }} >
+					<Text>Check in at current stop</Text>
+				</Button>
+				<Button block onPress={this.getDirections}>
+					<Text>Directions to next stop</Text>
+				</Button>
+				<Button block onPress={this.getRide}>
+					<Text>Uber</Text>
+				</Button>
+				<Button block onPress={this.tapOutAlert}>
+					<Text>Tapout</Text>
+				</Button>
+			</ScrollView>
+		);
+	}
 }

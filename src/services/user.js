@@ -25,7 +25,6 @@ function checkLogin() {
 }
 
 function login(email, password) {
-	alert(email);
 	return baseService
 		.makeFetch(`${url}/api/auth/login`, {
 			method: 'POST',

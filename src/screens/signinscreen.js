@@ -56,12 +56,18 @@ export default class SignInScreen extends Component {
 							<Label>Password</Label>
 							<Input secureTextEntry={true} onChangeText={password => this.setState({ password })} />
 						</Item>
+						{/* Forgot password button needs to go to new screen where user can enter the 
+							email they use associated with their craft crawls account. Then, we need 
+							to make sure that email exists in our DB. Then, we can use mailgun to send 
+							them an email with a new (long crazy) password. We will also need to change 
+							their password in the DB to the new (long crazy) password so when they try 
+							to log in, it will let them. Once they've logged in with the new (long crazy) 
+							password, they can go to the profile page screen and change their password.  */}
 						<Text>Forgot Password</Text>
 						<Button
 							block
 							onPress={() => {
 								this.login();
-								// alert('You were signed in....but not really lol');
 							}}
 						>
 							<Text>Sign In</Text>
@@ -70,15 +76,6 @@ export default class SignInScreen extends Component {
 						<Button block onPress={() => this.props.navigation.navigate('SignUp')}>
 							<Text>Sign Up</Text>
 						</Button>
-						{/* <Button
-							block
-							onPress={() => {
-								login();
-								this.props.navigation.navigate('Welcome');
-							}}
-						>
-							<Text>Cancel</Text>
-						</Button> */}
 					</Form>
 				</Content>
 			</Container>
