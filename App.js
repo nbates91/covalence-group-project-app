@@ -19,6 +19,12 @@ const PrimaryNavigation = SwitchNavigator(
 	{ initialRouteName: userService.isLoggedIn() ? 'DrawerStack' : 'SignIn' }
 );
 
+export const styles = StyleSheet.create({
+	errorRed: {
+	  color: 'red',
+	},
+});
+
 export default class App extends Component {
 	render() {
 		return <PrimaryNavigation />;

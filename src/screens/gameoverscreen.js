@@ -6,6 +6,7 @@ import { NavigationActions } from 'react-navigation';
 export default class GameOverScreen extends Component {
 	static navigationOptions = {
 		title: 'Game Over',
+		headerLeft: null
 	};
 
 	constructor(props) {

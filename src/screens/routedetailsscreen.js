@@ -26,9 +26,6 @@ export default class RouteDetailsScreen extends Component {
 
 	switchScreens() {
 		let id = this.id;
-		// alert(this.props.navigation.params);
-		// alert(JSON.stringify(this.props.navigation));
-
 		this.props.navigation.navigate({
 			routeName: 'ActiveRoute',
 			params: {},
@@ -48,7 +45,7 @@ export default class RouteDetailsScreen extends Component {
 				<Text>{this.routeName}</Text>
 				{routeStops}
 				<Button block onPress={() => this.switchScreens()}>
-					<Text>Select This Route!</Text>
+					<Text>Start this crawl!</Text>
 				</Button>
 			</ScrollView>
 		);
