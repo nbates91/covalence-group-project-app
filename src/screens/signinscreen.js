@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Header, Content, Form, Item, Input, Label, Button, Text } from 'native-base';
 import * as userService from '../services/user';
+import { AsyncStorage } from 'react-native';
 
 export default class SignInScreen extends Component {
 	constructor(props) {
@@ -14,14 +15,16 @@ export default class SignInScreen extends Component {
 		};
 	}
 
-	componentDidMount() {
-		userService.checkLogin().then(loggedIn => {
-			if (loggedIn) {
-				this.setState({ redirectToReferrer: true, checkingLogin: false });
-			} else {
-				this.setState({ checkingLogin: false });
-			}
-		});
+	async componentDidMount() {
+
+		let loggedIn = await userService.checkLogin();
+
+		if (loggedIn) {
+			this.setState({ redirectToReferrer: true, checkingLogin: false });
+			this.props.navigation.navigate('DrawerStack');
+		} else {
+			this.setState({ checkingLogin: false });
+		}
 	}
 
 	login() {

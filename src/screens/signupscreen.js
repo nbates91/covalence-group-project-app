@@ -3,15 +3,15 @@ import { Container, Header, Content, Form, Item, Input, Label, Button, Text } fr
 import * as userService from '../services/user';
 import { styles } from '../../App';
 
-export default class WelcomeScreen extends Component {
+export default class SignUp extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			email: '',
 			password: '',
 			confirmPass: '',
-			emailErrorMessage: "",
-			passwordErrorMessage: ""
+			emailErrorMessage: '',
+			passwordErrorMessage: ''
 		};
 	}
 	static navigationOptions = {
@@ -33,16 +33,9 @@ export default class WelcomeScreen extends Component {
 			});
 	}
 
-	emailExists() {
-		// return false for now...I'm getting tired - it's 11pm. Finish tomorrow.
-		return false;
-	}
-
 	isEmailValid() {
-		// let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		// let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-		// return re.test(String(this.state.email).toLowerCase());
-		return true;
+		let emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+		return emailFormat.test(String(this.state.email).toLowerCase());
 	}
 
 	isPasswordValid() {
@@ -61,55 +54,77 @@ export default class WelcomeScreen extends Component {
 		});
 	}
 
-	handleSubmit() {
-		if (!this.emailExists) {
-			if (this.isEmailValid()) {
-				this.clearEmailError();
-				if (this.state.password === this.state.confirmPass) {
-					this.clearPasswordError();
-					if (this.isPasswordValid()) {
-						let updatedUser = {
-							email: this.state.email,
-							hash: this.state.password,
-							role: 'user',
-							level: 0,
-							numberofcheckins: 0,
-						};
-						fetch(`https://bham-hops.herokuapp.com/api/users/`, 
-							{
-								method: 'POST',
-								body: JSON.stringify(updatedUser),
-								headers: new Headers({
-									'Content-Type': 'application/json',
-							}),
-						})
-						.then(res => {
-							this.login();
-						})
-						.catch(err => {
-							console.log(err);
-						});
-					}
-					else {
-						alert("Please enter a valid password.");
-					}
-				} 
+	passwordsMatch() {
+		return this.state.password === this.state.confirmPass;
+	}
+
+	createUser() {
+		let updatedUser = {
+			email: this.state.email,
+			hash: this.state.password,
+			role: 'user',
+			level: 0,
+			numberofcheckins: 0,
+		};
+		fetch(`https://bham-hops.herokuapp.com/api/users/`,
+			{
+				method: 'POST',
+				body: JSON.stringify(updatedUser),
+				headers: new Headers({
+					'Content-Type': 'application/json',
+				}),
+			})
+			.then(res => {
+				this.login();
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	}
+
+	checkEverythingElse() {
+		if (this.isEmailValid()) {
+			this.clearEmailError();
+			if (this.passwordsMatch()) {
+				this.clearPasswordError();
+				if (this.isPasswordValid()) {
+					this.createUser();
+				}
 				else {
-					this.setState({
-						passwordErrorMessage: "Passwords do not match."
-					});
+					alert("Please enter a valid password.");
 				}
 			}
 			else {
 				this.setState({
-					emailErrorMessage: "Email is invalid."
+					passwordErrorMessage: "Passwords do not match."
 				});
 			}
 		}
 		else {
-			alert("There is already an account registered with this email address.");
+			this.setState({
+				emailErrorMessage: "Email is invalid."
+			});
 		}
-		
+	}
+
+	// this checks to see if the email the user input already exists in the database. 
+	handleSubmit() {
+		fetch(`https://bham-hops.herokuapp.com/api/users/`)
+			.then((res) => {
+				return res.json();
+			})
+			.then((users) => {
+				for (let i = 0; i < users.length; i++) {
+					if ((users[i].email).toLowerCase() === (this.state.email).toLowerCase()) {
+						this.checkEverythingElse();
+						return; // this prevents us from ever getting out of the for loop (and to the alert)
+					}
+				}
+				alert("There is already an account registered with this email address.");
+			})
+			.catch(err => {
+				console.log(err);
+			});
 	}
 
 	render() {

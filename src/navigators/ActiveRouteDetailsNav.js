@@ -6,12 +6,14 @@ import OpenCamera from '../screens/camerascreen';
 
 const ActiveRouteDetailsNavigator = createStackNavigator(
 	{
-		ActiveRouteDetail: { screen: ActiveRouteScreen },
+		ActiveRouteDetail: {
+			screen: ActiveRouteScreen
+		},
 		GameOver: { screen: GameOverScreen },
 		LocationDetails: { screen: LocationDetailsScreen },
 		Camera: { screen: OpenCamera },
-	}, 
-	{ headerTitle: "Active Crawl" } 
+	},
+	{ headerTitle: "Active Crawl" }
 );
 
 export default ActiveRouteDetailsNavigator;

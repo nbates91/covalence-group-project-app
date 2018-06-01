@@ -7,6 +7,8 @@ const RouteDetailsNavigator = createStackNavigator({
 	RouteDetails: { screen: RouteDetailsScreen },
 	ActiveRoute: { screen: ActiveRouteScreen },
 	LocationDetails: { screen: LocationDetailsScreen },
-});
+}, {
+		headerMode: 'float'
+	});
 
 export default RouteDetailsNavigator;

@@ -21,9 +21,9 @@ function clearAuthToken() {
 	}
 }
 
-function populateAuthToken() {
+async function populateAuthToken() {
 	if (AsyncStorage) {
-		let token = AsyncStorage.getItem(AUTH_TOKEN_KEY);
+		let token = await AsyncStorage.getItem(AUTH_TOKEN_KEY);
 		if (token && token !== null) {
 			authToken = token;
 		}

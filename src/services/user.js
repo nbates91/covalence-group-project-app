@@ -3,15 +3,16 @@ import * as baseService from './base';
 let loggedIn = false;
 const url = 'https://bham-hops.herokuapp.com';
 
-function isLoggedIn() {
+async function isLoggedIn() {
+	await checkLogin();
 	return loggedIn;
 }
 
-function checkLogin() {
+async function checkLogin() {
 	if (loggedIn) {
 		return Promise.resolve(true);
 	} else {
-		baseService.populateAuthToken();
+		await baseService.populateAuthToken();
 		return me()
 			.then(user => {
 				loggedIn = true;

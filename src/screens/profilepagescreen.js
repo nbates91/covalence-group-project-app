@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, AsyncStorage } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Button, Text } from 'native-base';
 import * as baseService from '../services/base';
-
-let hardCodedUserId = 1;
+import { styles } from '../../App';
 
 export default class ProfilePageScreen extends Component {
 	static navigationOptions = ({ navigation }) => ({
@@ -21,17 +20,30 @@ export default class ProfilePageScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			userID: null,
 			userEmail: '',
 			profilePictureURL: '',
 			pictures: [],
 			user: null,
 			newPassword: '',
 			confirmPassword: '',
+			passwordErrorMessage: ''
 		};
+		this.setUserID();
+	}
+
+	setUserID() {
+		AsyncStorage.getItem('user')
+			.then(userID => {
+				this.setState({ userID });
+			})
+			.catch(err => {
+				console.log(err);
+			});
 	}
 
 	getPictures() {
-		fetch(`https://bham-hops.herokuapp.com/api/users/${hardCodedUserId}/images`)
+		fetch(`https://bham-hops.herokuapp.com/api/users/${this.state.userID}/images`)
 			.then(res => {
 				return res.json();
 			})
@@ -47,7 +59,7 @@ export default class ProfilePageScreen extends Component {
 	}
 
 	componentWillMount() {
-		fetch(`https://bham-hops.herokuapp.com/api/users/${hardCodedUserId}`)
+		fetch(`https://bham-hops.herokuapp.com/api/users/${this.state.userID}`)
 			.then(res => {
 				return res.json();
 			})
@@ -73,7 +85,7 @@ export default class ProfilePageScreen extends Component {
 				level: this.state.user.level,
 				numberofcheckins: this.state.user.numberofcheckins,
 			};
-			fetch(`https://bham-hops.herokuapp.com/api/users/${hardCodedUserId}`, {
+			fetch(`https://bham-hops.herokuapp.com/api/users/${this.state.userID}`, {
 				method: 'PUT',
 				body: JSON.stringify(updatedUser),
 				headers: new Headers({
@@ -84,6 +96,7 @@ export default class ProfilePageScreen extends Component {
 					this.setState({
 						newPassword: '',
 						confirmPassword: '',
+						passwordErrorMessage: ''
 					});
 				})
 				.catch(err => {
@@ -91,7 +104,9 @@ export default class ProfilePageScreen extends Component {
 				});
 			alert('Password was successfully changed!');
 		} else {
-			alert('Passwords do not match!');
+			this.setState({
+				passwordErrorMessage: 'Passwords do not match!'
+			});
 		}
 	}
 
@@ -111,6 +126,7 @@ export default class ProfilePageScreen extends Component {
 									value={this.state.newPassword}
 								/>
 							</Item>
+							<Text style={styles.errorRed}> {this.state.passwordErrorMessage} </Text>
 							<Item floatingLabel last>
 								<Label>Confirm Password</Label>
 								<Input
@@ -119,10 +135,10 @@ export default class ProfilePageScreen extends Component {
 									value={this.state.confirmPassword}
 								/>
 							</Item>
+							<Text style={styles.errorRed}> {this.state.passwordErrorMessage} </Text>
 							<Button
 								block
 								onPress={() => {
-									// save new password and show pop up confirmation
 									this.updatePassword();
 								}}
 							>
@@ -131,7 +147,7 @@ export default class ProfilePageScreen extends Component {
 						</Form>
 						<Text> Photos </Text>
 						{this.state.pictures.map((pic, index) => {
-							return <Text key={index}> {pic.imageurl} </Text>;
+							return <Text key={pic.id}> {pic.imageurl} </Text>;
 						})}
 					</Content>
 				</Container>

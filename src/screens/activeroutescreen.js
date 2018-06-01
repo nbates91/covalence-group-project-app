@@ -17,13 +17,15 @@ export default class ActiveRoute extends Component {
 				Menu
 			</Text>
 		),
+
 	});
 
 	constructor(props) {
 		super(props);
-		this.id = this.props.navigation.state.params.id;
+		// this.id = this.props.navigation.state.params.id;
 		this.state = {
 			route: [],
+			routeID: null,
 			stops: [],
 			userID: null,
 			user: null,
@@ -32,8 +34,34 @@ export default class ActiveRoute extends Component {
 	}
 
 	componentWillMount() {
-		// alert(this.id);
-		fetch(`https://bham-hops.herokuapp.com/api/routes/${this.id}`)
+		AsyncStorage.getItem('user')
+			.then(userID => {
+				fetch(`https://bham-hops.herokuapp.com/api/users/${userID}`)
+					.then(res => {
+						this.setState({ userID });
+						return res.json();
+					})
+					.then(user => {
+						this.setState({
+							user: user,
+							numberofcheckins: user.numberofcheckins,
+							routeID: user.activerouteid
+						});
+						this.getRoute();
+						// this.state.user.numberofcheckins += 1;
+						// this.updateUserCheckins(withPictureBoolean);
+					})
+					.catch(err => {
+						console.log(err);
+					});
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	}
+
+	getRoute() {
+		fetch(`https://bham-hops.herokuapp.com/api/routes/${this.state.routeID}`)
 			.then(res => {
 				return res.json();
 			})
@@ -49,7 +77,7 @@ export default class ActiveRoute extends Component {
 	}
 
 	getStops() {
-		return fetch(`https://bham-hops.herokuapp.com/api/routes/stops/${this.id}`)
+		return fetch(`https://bham-hops.herokuapp.com/api/routes/stops/${this.state.routeID}`)
 			.then(res => {
 				return res.json();
 			})
@@ -85,28 +113,8 @@ export default class ActiveRoute extends Component {
 	}
 
 	checkIn(withPictureBoolean) {
-		AsyncStorage.getItem('user')
-			.then(userID => {
-				fetch(`https://bham-hops.herokuapp.com/api/users/${userID}`)
-					.then(res => {
-						this.setState({ userID });
-						return res.json();
-					})
-					.then(user => {
-						this.setState({
-							user: user,
-							numberofcheckins: user.numberofcheckins
-						});
-						this.state.user.numberofcheckins += 1;
-						this.updateUserCheckins(withPictureBoolean);
-					})
-					.catch(err => {
-						console.log(err);
-					});
-			})
-			.catch(err => {
-				console.log(err);
-			});
+		this.state.user.numberofcheckins += 1;
+		this.updateUserCheckins(withPictureBoolean);
 	}
 
 	updateUserCheckins(withPictureBoolean) {
@@ -117,14 +125,14 @@ export default class ActiveRoute extends Component {
 				'Content-Type': 'application/json',
 			}),
 		})
-		.then( (res) => {
-			if (withPictureBoolean) {
-				this.props.navigation.navigate("Camera");
-			}
-		})
-		.catch(err => {
-			console.log(err);
-		}); 
+			.then((res) => {
+				if (withPictureBoolean) {
+					this.props.navigation.navigate("Camera");
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			});
 	}
 
 	checkInAlert() {
@@ -136,7 +144,7 @@ export default class ActiveRoute extends Component {
 				{ text: 'With Picture', onPress: () => this.checkIn(true) },
 				{ text: 'Without Picture', onPress: () => this.checkIn(false), style: 'cancel' },
 			],
-				{ cancelable: false }
+			{ cancelable: false }
 		);
 	}
 
@@ -150,9 +158,13 @@ export default class ActiveRoute extends Component {
 		);
 	};
 
+	switchScreens(id) {
+		this.props.navigation.navigate('LocationDetails', { id });
+	}
+
 	render() {
 		let routeStops = this.state.stops.map((stop, index) => {
-			return <LocationCard key={stop.stopid} stop={stop} navigation={this.props.navigation} />;
+			return <LocationCard key={stop.stopid} stop={stop} onPress={() => this.switchScreens(stop.stopid)} />;
 		});
 		return (
 			<ScrollView>
