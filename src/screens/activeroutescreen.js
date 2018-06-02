@@ -3,11 +3,11 @@ import { View, Alert, ScrollView, Linking, AsyncStorage } from 'react-native';
 import { Button, Text, Container } from 'native-base';
 import LocationCard from '../components/locationcard';
 import { NavigationActions } from 'react-navigation';
+// import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class ActiveRoute extends Component {
 	static navigationOptions = ({ navigation }) => ({
-		// headerTitle: "Active Crawl",
-		// drawerLabel: <Text> Active Crawl </Text>,
+		title: "Active Crawl",
 		headerRight: (
 			<Text
 				onPress={() => {
@@ -22,14 +22,13 @@ export default class ActiveRoute extends Component {
 
 	constructor(props) {
 		super(props);
-		// this.id = this.props.navigation.state.params.id;
 		this.state = {
 			route: [],
 			routeID: null,
 			stops: [],
 			userID: null,
 			user: null,
-			numberofcheckins: null
+			numberofcheckins: null // this variable is only used so can change state (which makes the page reload) - location.reload() doesn't work...
 		};
 	}
 
@@ -48,8 +47,6 @@ export default class ActiveRoute extends Component {
 							routeID: user.activerouteid
 						});
 						this.getRoute();
-						// this.state.user.numberofcheckins += 1;
-						// this.updateUserCheckins(withPictureBoolean);
 					})
 					.catch(err => {
 						console.log(err);
@@ -100,13 +97,31 @@ export default class ActiveRoute extends Component {
 		});
 	}
 
+	clearTheUsersActiveRouteAndNavigateToGameOver() {
+		this.state.user.activerouteid = null;
+		this.state.user.numberofcheckins = 0;
+		fetch(`https://bham-hops.herokuapp.com/api/users/${this.state.userID}`, {
+			method: 'PUT',
+			body: JSON.stringify(this.state.user),
+			headers: new Headers({
+				'Content-Type': 'application/json',
+			}),
+		})
+			.then((res) => {
+				this.navigateToGameOver();
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	}
+
 	tapOutAlert = () => {
 		Alert.alert(
 			'Tapout',
 			'Are you sure?',
 			[
 				{ text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-				{ text: 'OK', onPress: () => this.navigateToGameOver() },
+				{ text: 'OK', onPress: () => this.clearTheUsersActiveRouteAndNavigateToGameOver()},
 			],
 			{ cancelable: false }
 		);
@@ -114,6 +129,7 @@ export default class ActiveRoute extends Component {
 
 	checkIn(withPictureBoolean) {
 		this.state.user.numberofcheckins += 1;
+		this.setState({ numberofcheckins: this.state.numberofcheckins + 1});
 		this.updateUserCheckins(withPictureBoolean);
 	}
 
@@ -128,6 +144,12 @@ export default class ActiveRoute extends Component {
 			.then((res) => {
 				if (withPictureBoolean) {
 					this.props.navigation.navigate("Camera");
+				}
+				else {
+					if (this.isRouteComplete()) {
+						// update the user's level here
+						this.clearTheUsersActiveRouteAndNavigateToGameOver();
+					}
 				}
 			})
 			.catch(err => {
@@ -162,9 +184,14 @@ export default class ActiveRoute extends Component {
 		this.props.navigation.navigate('LocationDetails', { id });
 	}
 
+	isRouteComplete() {
+		// return false;
+		return this.state.stops.length === this.state.user.numberofcheckins;
+	}
+
 	render() {
 		let routeStops = this.state.stops.map((stop, index) => {
-			return <LocationCard key={stop.stopid} stop={stop} onPress={() => this.switchScreens(stop.stopid)} />;
+			return <LocationCard key={stop.stopid} addIcon={this.state.numberofcheckins > index} stop={stop} onPress={() => this.switchScreens(stop.stopid)} />;
 		});
 		return (
 			<ScrollView>

@@ -15,8 +15,10 @@ export default class RouteDetailsScreen extends Component {
 		this.state = {
 			stops: [],
 			buttonIsDisabled: false,
+			buttonText: "",
 			userID: null,
-			user: null
+			user: null,
+			crawlWarningMessage: ""
 		};
 	}
 
@@ -38,15 +40,27 @@ export default class RouteDetailsScreen extends Component {
 			})
 			.then(user => {
 				this.setState({ user });
-				// alert(user.activerouteid);
 				if (user.activerouteid && user.activerouteid != null) { // if the user does have an active route...
-					this.setState({
-						buttonIsDisabled: true	// disable the button
-					});
+					if (user.activerouteid === this.routeid) { // if the user selected the route they're actively crawling...
+						this.setState({
+							buttonIsDisabled: false,	// enable button
+							buttonText: "View Active Crawl",
+							crawlWarningMessage: ""
+						});
+					}
+					else {
+						this.setState({
+							buttonIsDisabled: true,	// disable the button
+							crawlWarningMessage: "You cannot start another crawl until you complete or tap out of your current crawl.",
+							buttonText: "Start This Crawl"
+						});
+					}
 				}
 				else {
 					this.setState({
-						buttonIsDisabled: false
+						buttonIsDisabled: false, // enable button
+						crawlWarningMessage: ""	,
+						buttonText: "Start This Crawl"
 					});
 				}
 			})
@@ -105,14 +119,15 @@ export default class RouteDetailsScreen extends Component {
 
 	render() {
 		let routeStops = this.state.stops.map((stop, index) => {
-			return <LocationCard onPress={() => this.goToLocationDetail(stop.stopid)} key={stop.stopid} stop={stop} />;
+			return <LocationCard addIcon={false} onPress={() => this.goToLocationDetail(stop.stopid)} key={stop.stopid} stop={stop} />;
 		});
 		return (
 			<ScrollView>
 				<Text>{this.routeName}</Text>
 				{routeStops}
+				<Text> {this.state.crawlWarningMessage} </Text>
 				<Button block disabled={this.state.buttonIsDisabled} onPress={() => this.updateUsersActiveRouteAndSwitchScreens()} >
-					<Text> Start this crawl! </Text>
+					<Text> {this.state.buttonText} </Text>
 				</Button>
 			</ScrollView>
 		);

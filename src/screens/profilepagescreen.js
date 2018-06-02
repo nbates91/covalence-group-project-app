@@ -29,13 +29,19 @@ export default class ProfilePageScreen extends Component {
 			confirmPassword: '',
 			passwordErrorMessage: ''
 		};
-		this.setUserID();
 	}
 
-	setUserID() {
-		AsyncStorage.getItem('user')
-			.then(userID => {
-				this.setState({ userID });
+	getUser() {
+		fetch(`https://bham-hops.herokuapp.com/api/users/${this.state.userID}`)
+			.then(res => {
+				return res.json();
+			})
+			.then(user => {
+				this.setState({
+					userEmail: user.email,
+					user: user,
+				});
+				this.getPictures();
 			})
 			.catch(err => {
 				console.log(err);
@@ -59,16 +65,10 @@ export default class ProfilePageScreen extends Component {
 	}
 
 	componentWillMount() {
-		fetch(`https://bham-hops.herokuapp.com/api/users/${this.state.userID}`)
-			.then(res => {
-				return res.json();
-			})
-			.then(user => {
-				this.setState({
-					userEmail: user.email,
-					user: user,
-				});
-				this.getPictures();
+		AsyncStorage.getItem('user')
+			.then(userID => {
+				this.setState({ userID });
+				this.getUser();
 			})
 			.catch(err => {
 				console.log(err);
