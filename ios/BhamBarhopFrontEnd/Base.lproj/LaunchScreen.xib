@@ -21,16 +21,17 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Craft_Crawls_Logo_Final" translatesAutoresizingMaskIntoConstraints="NO" id="XGS-2I-OwU">
-                    <rect key="frame" x="120" y="170" width="240" height="140"/>
-                    <autoresizingMask key="autoresizingMask"/>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Craft_Crawls_Logo_Final" translatesAutoresizingMaskIntoConstraints="NO" id="XGS-2I-OwU">
+                    <rect key="frame" x="111" y="90" width="258" height="300"/>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="XGS-2I-OwU" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="H2a-5M-Rob"/>
                 <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="Kzo-t9-V3l"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="MfP-vx-nX0"/>
                 <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="ZEH-qu-HZ9"/>
+                <constraint firstItem="XGS-2I-OwU" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="c2Q-oV-Huv"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
