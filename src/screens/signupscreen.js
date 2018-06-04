@@ -39,6 +39,7 @@ export default class SignUp extends Component {
 	}
 
 	isPasswordValid() {
+		// make password more secure if we decide to put on app store.
 		return this.state.password.length >= 5;
 	}
 
@@ -116,11 +117,11 @@ export default class SignUp extends Component {
 			.then((users) => {
 				for (let i = 0; i < users.length; i++) {
 					if ((users[i].email).toLowerCase() === (this.state.email).toLowerCase()) {
-						this.checkEverythingElse();
+						alert("There is already an account registered with this email address.");
 						return; // this prevents us from ever getting out of the for loop (and to the alert)
 					}
 				}
-				alert("There is already an account registered with this email address.");
+				this.checkEverythingElse();
 			})
 			.catch(err => {
 				console.log(err);

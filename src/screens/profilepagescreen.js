@@ -75,38 +75,47 @@ export default class ProfilePageScreen extends Component {
 			});
 	}
 
+	isPasswordValid() {
+		// make password more secure if we decide to put on app store.
+		return this.state.newPassword.length >= 5 || this.state.confirmPassword.length >= 5;
+	}
+
 	updatePassword() {
-		// still need to add requirements to passwords - even an empty password works right now...
-		if (this.state.newPassword === this.state.confirmPassword) {
-			let updatedUser = {
-				email: this.state.user.email,
-				hash: this.state.newPassword,
-				role: this.state.user.role,
-				level: this.state.user.level,
-				numberofcheckins: this.state.user.numberofcheckins,
-			};
-			fetch(`https://bham-hops.herokuapp.com/api/users/${this.state.userID}`, {
-				method: 'PUT',
-				body: JSON.stringify(updatedUser),
-				headers: new Headers({
-					'Content-Type': 'application/json',
-				}),
-			})
-				.then(res => {
-					this.setState({
-						newPassword: '',
-						confirmPassword: '',
-						passwordErrorMessage: ''
-					});
+		if (this.isPasswordValid()) {
+			if (this.state.newPassword === this.state.confirmPassword) {
+				let updatedUser = {
+					email: this.state.user.email,
+					hash: this.state.newPassword,
+					role: this.state.user.role,
+					level: this.state.user.level,
+					numberofcheckins: this.state.user.numberofcheckins,
+				};
+				fetch(`https://bham-hops.herokuapp.com/api/users/${this.state.userID}`, {
+					method: 'PUT',
+					body: JSON.stringify(updatedUser),
+					headers: new Headers({
+						'Content-Type': 'application/json',
+					}),
 				})
-				.catch(err => {
-					console.log(err);
+					.then(res => {
+						this.setState({
+							newPassword: '',
+							confirmPassword: '',
+							passwordErrorMessage: ''
+						});
+					})
+					.catch(err => {
+						console.log(err);
+					});
+				alert('Password was successfully changed!');
+			} else {
+				this.setState({
+					passwordErrorMessage: 'Passwords do not match!'
 				});
-			alert('Password was successfully changed!');
-		} else {
-			this.setState({
-				passwordErrorMessage: 'Passwords do not match!'
-			});
+			}
+		}
+		else {
+			alert("Please enter a valid password.");
 		}
 	}
 
@@ -126,6 +135,7 @@ export default class ProfilePageScreen extends Component {
 									value={this.state.newPassword}
 								/>
 							</Item>
+							<Text> Password is case sensitve and must contain at least 5 characters. </Text>
 							<Text style={styles.errorRed}> {this.state.passwordErrorMessage} </Text>
 							<Item floatingLabel last>
 								<Label>Confirm Password</Label>

@@ -22,15 +22,18 @@ export default class RouteDetailsScreen extends Component {
 		};
 	}
 
-	async componentWillMount() {
-		try {
-			let results = await fetch(`https://bham-hops.herokuapp.com/api/routes/stops/${this.routeid}`);
-			let stops = await results.json();
-			this.setState({ stops });
-			this.checkIfUserHasActiveRoute();
-		} catch (err) {
-			console.log(err);
-		}
+	componentWillMount() {
+		fetch(`https://bham-hops.herokuapp.com/api/routes/stops/${this.routeid}`)
+			.then(results => {
+				return results.json();
+			})
+			.then(stops => {
+				this.setState({ stops });
+				this.checkIfUserHasActiveRoute();
+			})
+			.catch(err => {
+				console.log(err);
+			});
 	}
 
 	getUsersActiveRoute() {
@@ -59,7 +62,7 @@ export default class RouteDetailsScreen extends Component {
 				else {
 					this.setState({
 						buttonIsDisabled: false, // enable button
-						crawlWarningMessage: ""	,
+						crawlWarningMessage: "",
 						buttonText: "Start This Crawl"
 					});
 				}
