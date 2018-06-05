@@ -6,52 +6,69 @@
 
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
-import { StackNavigator, DrawerNavigator } from 'react-navigation';
-import WelcomeScreen from './src/screens/welcomescreen';
-import Homescreen from './src/screens/homescreen';
-import SignInScreen from './src/screens/signinscreen';
-import SignUpScreen from './src/screens/signupscreen';
-import RouteDetailsScreen from './src/screens/routedetailsscreen';
-import ActiveRouteScreen from './src/screens/activeroutescreen';
-import GameOverScreen from './src/screens/gameoverscreen';
-import ProfilePageScreen from './src/screens/profilepagescreen';
-import LocationDetailsScreen from './src/screens/locationdetailsscreen';
-import ContactScreen from './src/screens/contactscreen';
+import { createSwitchNavigator } from 'react-navigation';
+import SignInNavigator from './src/navigators/SignInNav';
+import DrawerNavigation from './src/navigators/DrawerNav';
+import * as userService from './src/services/user';
 
-// const DrawerStack = DrawerNavigator({
-// 	Home: { screen: Homescreen },
-// 	ActiveRoute: { screen: ActiveRouteScreen },
-// });
+// LOGO HEX VALUES
+// Gray: #C8D5B9
+// Tan: #FAF3DD
+// Light Brown: #A5978B
+// Green: #ACEB98
+// Dark Blue: #4B88A2
 
-const DrawerNavigation = DrawerNavigator(
-	{
-		Home: { screen: Homescreen },
-		ActiveRoute: { screen: ActiveRouteScreen },
+export const styles = StyleSheet.create({
+	backgroundColor: {
+		backgroundColor: "#A5978B",
 	},
-	{
-		headerMode: 'float',
+	headerColor: {
+		backgroundColor: "#A5978B",
+	},
+	errorRed: {
+		color: "red",
+	},
+	button: {
+		backgroundColor: "#DD8C5D",
+		width: 200,
+		margin: 5,
+		alignSelf: "center"
+	},
+	boxShadow: {
+		padding: 10,
+		margin: 10,
+		backgroundColor: "#FAF3DD",
+		shadowOffset: { width: 8, height: 8, },
+		shadowColor: '#A38560',
+		shadowOpacity: 1.0,
 	}
-);
-
-const RootNavigator = StackNavigator(
-	{
-		Welcome: { screen: WelcomeScreen },
-		SignIn: { screen: SignInScreen },
-		SignUp: { screen: SignUpScreen },
-		Home: { screen: Homescreen },
-		RouteDetailsScreen: { screen: RouteDetailsScreen },
-		// drawerStack: { screen: DrawerNavigation },
-		ActiveRoute: { screen: ActiveRouteScreen },
-		GameOver: { screen: GameOverScreen },
-		// ProfilePage: { screen: ProfilePageScreen },
-		LocationDetails: { screen: LocationDetailsScreen },
-		Contact: { screen: ContactScreen },
-	},
-	{ initialRouteName: 'Welcome' }
-);
+});
 
 export default class App extends Component {
+
+	PrimaryNavigation = () => <View />;
+
+	constructor(props) {
+		super(props)
+		this.state = { loggedIn: false };
+	}
+
+	async componentWillMount() {
+		let r = await userService.isLoggedIn();
+		this.PrimaryNavigation = createSwitchNavigator(
+			{
+				SignIn: SignInNavigator,
+				DrawerStack: DrawerNavigation,
+			},
+			{
+				initialRouteName: r ? 'DrawerStack' : 'SignIn',
+				headerMode: "screen"
+			}
+		);
+		this.setState({ loggedIn: r });
+	}
+
 	render() {
-		return <RootNavigator />;
+		return <this.PrimaryNavigation />;
 	}
 }

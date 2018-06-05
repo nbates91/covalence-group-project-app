@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, Form, Item, Input, Label, Button, Text } from 'native-base';
+import { Image } from 'react-native';
+import { Container, Header, Content, Form, Item, Input, Label, Button, Text, View, Card } from 'native-base';
 import * as userService from '../services/user';
+import { AsyncStorage } from 'react-native';
+import { styles } from '../../App';
+// import cclogo from '../assetts/cclogo'
 
 export default class SignInScreen extends Component {
+	static navigationOptions = {
+		title: 'Sign in',
+	};
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -10,32 +18,36 @@ export default class SignInScreen extends Component {
 			email: '',
 			password: '',
 			feedbackMessage: '',
-			checkingLogin: true
+			checkingLogin: true,
 		};
-	};
+	}
 
-	componentDidMount() {
-		userService.checkLogin()
-			.then((loggedIn) => {
-				if (loggedIn) {
-					this.setState({ redirectToReferrer: true, checkingLogin: false });
-				} else {
-					this.setState({ checkingLogin: false });
-				}
-			});
-	};
+	async componentDidMount() {
+
+		let loggedIn = await userService.checkLogin();
+
+		if (loggedIn) {
+			this.setState({ redirectToReferrer: true, checkingLogin: false });
+			this.props.navigation.navigate('DrawerStack');
+		} else {
+			this.setState({ checkingLogin: false });
+		}
+	}
 
 	login() {
-		userService.login(this.state.email, this.state.password)
+		userService
+			.login(this.state.email, this.state.password)
 			.then(() => {
 				this.setState({ redirectToReferrer: true });
-			}).catch(err => {
+				this.props.navigation.navigate('DrawerStack');
+			})
+			.catch(err => {
 				if (err.message) {
-					alert(err.message)
 					this.setState({ feedbackMessage: err.message });
+					alert(err.message);
 				}
 			});
-	};
+	}
 
 	static navigationOptions = {
 		title: 'Sign in',
@@ -44,35 +56,41 @@ export default class SignInScreen extends Component {
 	render() {
 		return (
 			<Container>
-				<Content>
-					<Form>
-						<Item floatingLabel>
-							<Label>Email</Label>
-							<Input onChangeText={email => this.setState({ email })} />
-						</Item>
-						<Item floatingLabel last>
-							<Label>Password</Label>
-							<Input onChangeText={password => this.setState({ password })} />
-						</Item>
-						<Text>Forgot Password</Text>
-						<Button
-							block
-							onPress={() => {
-								this.login()
-								// alert('You were signed in....but not really lol');
-							}}
-						>
-							<Text>Sign In</Text>
-						</Button>
-						<Button
-							block
-							onPress={() => {
-								this.props.navigation.navigate('Welcome');
-							}}
-						>
-							<Text>Cancel</Text>
-						</Button>
-					</Form>
+				<Content style={styles.backgroundColor}>
+					<Image style={{ alignSelf: "center", margin: 15, width: 150, height: 150 }} source={require('../assetts/cclogo.png')} />
+					<Card style={styles.boxShadow}>
+						<Form>
+							<Item floatingLabel>
+								<Label>Email</Label>
+								<Input onChangeText={email => this.setState({ email })} />
+							</Item>
+							<Item floatingLabel last>
+								<Label>Password</Label>
+								<Input secureTextEntry={true} onChangeText={password => this.setState({ password })} />
+							</Item>
+							{/* Forgot password button needs to go to new screen where user can enter the 
+								email they use associated with their craft crawls account. Then, we need 
+								to make sure that email exists in our DB. Then, we can use mailgun to send 
+								them an email with a new (long crazy) password. We will also need to change 
+								their password in the DB to the new (long crazy) password so when they try 
+								to log in, it will let them. Once they've logged in with the new (long crazy) 
+								password, they can go to the profile page screen and change their password.  */}
+							<Text>Forgot Password</Text>
+							<Button
+								block
+								onPress={() => {
+									this.login();
+								}}
+								style={styles.button}
+							>
+								<Text>Sign In</Text>
+							</Button>
+							<Text> Don't have an account yet? </Text>
+							<Button block style={styles.button} onPress={() => this.props.navigation.navigate('SignUp')}>
+								<Text>Sign Up</Text>
+							</Button>
+						</Form>
+					</Card>
 				</Content>
 			</Container>
 		);

@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import { Button, Card, CardItem, Text, Body } from 'native-base';
+import { withNavigation, NavigationActions } from 'react-navigation';
 
-export default class RoutesCard extends Component {
+class RoutesCard extends Component {
 	switchScreens(id, routename) {
-		this.props.navigation.navigate('RouteDetailsScreen', { id, routename });
+		// this.props.navigation.navigate({
+		// 	routeName: 'RouteDetails',
+		// 	params: {},
+		// 	action: NavigationActions.navigate({
+		// 		routeName: 'RouteDetailsScreen',
+		// 		params: { id, routename },
+		// 	}),
+		// });
+		this.props.navigation.navigate('RouteDetails', { id, routename });
 	}
 
 	render() {
@@ -12,10 +21,13 @@ export default class RoutesCard extends Component {
 				<CardItem button onPress={() => this.switchScreens(this.props.id, this.props.route.routename)}>
 					<Body>
 						<Text>{this.props.route.routename}</Text>
-						<Text>Number of stops:{this.props.route.numberofstops}</Text>
+						<Text>Number of stops: {this.props.route.numberofstops}</Text>
+						<Text>{this.props.route.routedescription}</Text>
 					</Body>
 				</CardItem>
 			</Card>
 		);
 	}
 }
+
+export default withNavigation(RoutesCard);
