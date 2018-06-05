@@ -11,27 +11,32 @@ import SignInNavigator from './src/navigators/SignInNav';
 import DrawerNavigation from './src/navigators/DrawerNav';
 import * as userService from './src/services/user';
 
-// LOGO HEX VALUES
-// Gray: #C8D5B9
-// Tan: #FAF3DD
-// Light Brown: #A5978B
-// Green: #ACEB98
-// Dark Blue: #4B88A2
+// Header Bar: #69A0B1
+// Header Text: #A2978D
+// Menu Route: #AAC1A9
+// Light Menu Route: #D7E2CC
+// Lightest Color: #F9F5E0
+// Dark Gray: #404041
+// Light Gray: #58585B 
 
 export const styles = StyleSheet.create({
 	backgroundColor: {
-		backgroundColor: "#A5978B",
+		backgroundColor: "#F9F5E0",
 	},
-	headerColor: {
-		backgroundColor: "#A5978B",
+	header: {
+		backgroundColor: "#69A0B1",
+		height: 50
 	},
 	errorRed: {
 		color: "red",
 	},
 	button: {
-		backgroundColor: "#DD8C5D",
+		backgroundColor: "#69A0B1",
 		width: 200,
-		margin: 5,
+		marginTop: 15,
+		marginLeft: 5,
+		marginRight: 5,
+		marginBottom: 5,
 		alignSelf: "center"
 	},
 	boxShadow: {
@@ -44,6 +49,49 @@ export const styles = StyleSheet.create({
 		shadowOffset: { width: 12, height: 12, },
 		shadowColor: '#A38560',
 		shadowOpacity: 1.0,
+	},
+	backgroundImage: {
+		flex: 1,
+		width: undefined,
+		height: undefined,
+	},
+	signInTopMargin: {
+		marginTop: 75
+	},
+	emailInputTextBox: {
+		width: 300,
+		alignSelf: "center",
+		borderColor: "#404041"
+	},
+	passwordInputTextBox: {
+		width: 300,
+		alignSelf: "center",
+		borderColor: "#58585B",
+		marginLeft: 12
+	},
+	absoluteView: {
+		flex: 1,
+		position: 'absolute',
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: 'transparent'
+	},
+	buttonBackground: {
+		width: 344,
+		height: 70,
+		padding: 20,
+		marginTop: 15,
+		marginLeft: 17,
+		marginRight: 5,
+		marginBottom: 5,
+		alignSelf: "center"
+	},
+	footer: {
+		position: "absolute",
+		flex: 1,
+		flexDirection: 'row',
+		left: 50,
+		bottom: -750,
 	}
 });
 

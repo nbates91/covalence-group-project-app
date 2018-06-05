@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Button, Text, View, Card } from 'native-base';
 import * as userService from '../services/user';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { styles } from '../../App';
-// import cclogo from '../assetts/cclogo'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class SignInScreen extends Component {
 	static navigationOptions = {
-		title: 'Sign in',
+		header: null
 	};
 
 	constructor(props) {
@@ -49,50 +48,57 @@ export default class SignInScreen extends Component {
 			});
 	}
 
-	static navigationOptions = {
-		title: 'Sign in',
-	};
+	forgotPw() {
+		alert(
+			"pressed!"
+			// <Form>
+			// 	<Label><Icon name="envelope" size={20} color="#58585B" />Email</Label>
+			// 	<Button><Text>Send Email!</Text></Button>
+			// </Form >
+		)
+	}
 
 	render() {
 		return (
 			<Container>
-				<Content style={styles.backgroundColor}>
-					<Image style={{ alignSelf: "center", margin: 15, width: 150, height: 150 }} source={require('../assetts/cclogo.png')} />
-					<Card style={styles.boxShadow}>
+				<ImageBackground source={require('../assets/backgroundimage_copy.png')} style={styles.backgroundImage}>
+					<Content>
+						<Image style={{ marginTop: 50, alignSelf: "center", width: 250, height: 250, resizeMode: 'contain' }} source={require('../assets/cclogo.png')} />
 						<Form>
-							<Item floatingLabel>
-								<Label>Email</Label>
+							<Item floatingLabel style={styles.emailInputTextBox}>
+								<Label>   <Icon style={{ marginLeft: 5 }} name="envelope" size={20} color="#58585B" />   Email</Label>
 								<Input onChangeText={email => this.setState({ email })} />
 							</Item>
-							<Item floatingLabel last>
-								<Label>Password</Label>
+							<Item floatingLabel last style={styles.passwordInputTextBox}>
+								<Label><Icon name="lock" size={23} color="#58585B" />    Password</Label>
 								<Input secureTextEntry={true} onChangeText={password => this.setState({ password })} />
 							</Item>
+							<ImageBackground source={require('../assets/buttonbg.png')} style={styles.buttonBackground}>
+								<TouchableOpacity
+									block
+									onPress={() => {
+										this.login();
+									}}
+								>
+									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>SIGN IN</Text>
+								</TouchableOpacity>
+							</ImageBackground>
 							{/* Forgot password button needs to go to new screen where user can enter the 
-								email they use associated with their craft crawls account. Then, we need 
-								to make sure that email exists in our DB. Then, we can use mailgun to send 
-								them an email with a new (long crazy) password. We will also need to change 
-								their password in the DB to the new (long crazy) password so when they try 
-								to log in, it will let them. Once they've logged in with the new (long crazy) 
-								password, they can go to the profile page screen and change their password.  */}
-							<Text>Forgot Password</Text>
-							<Button
-								block
-								onPress={() => {
-									this.login();
-								}}
-								style={styles.button}
-							>
-								<Text>Sign In</Text>
-							</Button>
-							<Text> Don't have an account yet? </Text>
-							<Button block style={styles.button} onPress={() => this.props.navigation.navigate('SignUp')}>
-								<Text>Sign Up</Text>
-							</Button>
+									email they use associated with their craft crawls account. Then, we need 
+									to make sure that email exists in our DB. Then, we can use mailgun to send 
+									them an email with a new (long crazy) password. We will also need to change 
+									their password in the DB to the new (long crazy) password so when they try 
+									to log in, it will let them. Once they've logged in with the new (long crazy) 
+									password, they can go to the profile page screen and change their password.  */}
+							<Text style={{ alignSelf: "center" }} onPress={() => alert('Pressed!')}>Forgot Your Password?</Text>
+							<Container style={styles.footer}>
+								<Text> Don't have an account yet? </Text>
+								<Text onPress={() => this.props.navigation.navigate('SignUp')} style={{ fontWeight: "bold" }}>Sign Up!</Text>
+							</Container>
 						</Form>
-					</Card>
-				</Content>
-			</Container>
+					</Content>
+				</ImageBackground >
+			</Container >
 		);
 	}
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ImageBackground, TouchableOpacity, Image } from 'react-native'
 import { Container, Header, Content, Form, Item, Input, Label, Button, Text } from 'native-base';
 import * as userService from '../services/user';
 import { styles } from '../../App';
@@ -131,37 +132,42 @@ export default class SignUp extends Component {
 	render() {
 		return (
 			<Container>
-				<Content>
-					<Form>
-						<Item floatingLabel>
-							<Label>Email</Label>
-							<Input onChangeText={email => this.setState({ email })} />
-						</Item>
-						<Text style={styles.errorRed} > {this.state.emailErrorMessage} </Text>
-						<Item floatingLabel last>
-							<Label>Password</Label>
-							<Input secureTextEntry={true} onChangeText={password => this.setState({ password })} />
-						</Item>
-						<Text> Password is case sensitve and must contain at least 5 characters. </Text>
-						<Text style={styles.errorRed}> {this.state.passwordErrorMessage} </Text>
-						<Item floatingLabel last>
-							<Label>Confirm Password</Label>
-							<Input
-								secureTextEntry={true}
-								onChangeText={confirmPass => this.setState({ confirmPass })}
-							/>
-						</Item>
-						<Text style={styles.errorRed}> {this.state.passwordErrorMessage} </Text>
-						<Button
-							block
-							onPress={() => {
-								this.handleSubmit();
-							}}
-						>
-							<Text>Create Account</Text>
-						</Button>
-					</Form>
-				</Content>
+				<ImageBackground source={require('../assets/backgroundimage_copy.png')} style={styles.backgroundImage}>
+					<Content>
+						<Image style={{ marginTop: 50, alignSelf: "center", width: 250, height: 250, resizeMode: 'contain' }} source={require('../assets/cclogo.png')} />
+						<Form>
+							<Item floatingLabel>
+								<Label>Email</Label>
+								<Input onChangeText={email => this.setState({ email })} />
+							</Item>
+							<Text style={styles.errorRed} > {this.state.emailErrorMessage} </Text>
+							<Item floatingLabel last>
+								<Label>Password</Label>
+								<Input secureTextEntry={true} onChangeText={password => this.setState({ password })} />
+							</Item>
+							<Text> Password is case sensitve and must contain at least 5 characters. </Text>
+							<Text style={styles.errorRed}> {this.state.passwordErrorMessage} </Text>
+							<Item floatingLabel last>
+								<Label>Confirm Password</Label>
+								<Input
+									secureTextEntry={true}
+									onChangeText={confirmPass => this.setState({ confirmPass })}
+								/>
+							</Item>
+							<Text style={styles.errorRed}> {this.state.passwordErrorMessage} </Text>
+							<ImageBackground source={require('../assets/buttonbg.png')} style={styles.buttonBackground}>
+								<TouchableOpacity
+									block
+									onPress={() => {
+										this.login();
+									}}
+								>
+									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>CREATE ACCOUNT</Text>
+								</TouchableOpacity>
+							</ImageBackground>
+						</Form>
+					</Content>
+				</ImageBackground>
 			</Container>
 		);
 	}

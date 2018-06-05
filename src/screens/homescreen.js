@@ -1,29 +1,25 @@
 import React, { Component } from 'react';
 import { ScrollView, Button, Text } from 'react-native';
+import { Content, Container } from 'native-base';
 import RoutesCard from '../components/routescard';
+import Icon from 'react-native-vector-icons/Entypo';
 
 export default class Homescreen extends Component {
 	static navigationOptions = ({ navigation }) => ({
 		title: 'Choose a Route!',
-		headerRight: (
+		headerLeft: (
 			<Text
 				onPress={() => {
 					navigation.toggleDrawer();
 				}}
 			>
-				Menu
+				<Icon name="menu" size={30} color="#F9F5E0" />
 			</Text>
 		),
 	});
 
-	// static navigationOptions = {
-	// 	title: 'Choose a Route!',
-	// 	headerRight: <Text onPress={() => this.navigation.navigate('drawerStack')}>Menu</Text>,
-	// };
-
 	constructor(props) {
 		super(props);
-		// this.navigation = this.props.navigation.state.params.navigation;
 		this.state = {
 			routes: [],
 		};
@@ -41,14 +37,20 @@ export default class Homescreen extends Component {
 
 	render() {
 		return (
-			<ScrollView>
-				{/* <Button title="Menu" onPress={() => this.props.navigation.navigate('DrawerOpen')}/> */}
-				{this.state.routes.map((route, index) => {
-					return (
-						<RoutesCard key={index} route={route} id={route.routeid} />
-					);
-				})}
-			</ScrollView>
+			<Container>
+				<Content style={{ backgroundColor: "#F9F5E0" }}>
+					<ScrollView >
+						<Content >
+							<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>AVAILABLE CRAWLS</Text>
+							{this.state.routes.map((route, index) => {
+								return (
+									<RoutesCard key={route.routeid} route={route} id={route.routeid} />
+								);
+							})}
+						</Content>
+					</ScrollView>
+				</Content>
+			</Container>
 		);
 	}
 }
