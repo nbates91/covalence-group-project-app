@@ -35,10 +35,13 @@ export const styles = StyleSheet.create({
 		alignSelf: "center"
 	},
 	boxShadow: {
+		alignSelf: "center",
+		width: 360,
+		height: 360,
 		padding: 10,
 		margin: 10,
 		backgroundColor: "#FAF3DD",
-		shadowOffset: { width: 8, height: 8, },
+		shadowOffset: { width: 12, height: 12, },
 		shadowColor: '#A38560',
 		shadowOpacity: 1.0,
 	}
