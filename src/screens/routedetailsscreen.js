@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { ScrollView, AsyncStorage } from 'react-native';
-import { Button, Text } from 'native-base';
+import { ScrollView, AsyncStorage, ImageBackground, Image, TouchableOpacity } from 'react-native';
+import { Button, Text, Content, Container } from 'native-base';
 import LocationCard from '../components/locationcard';
 import { NavigationActions } from 'react-navigation';
+import { styles } from '../../App';
 
 export default class RouteDetailsScreen extends Component {
 	static navigationOptions = ({ navigation }) => ({
@@ -12,6 +13,7 @@ export default class RouteDetailsScreen extends Component {
 		super(props);
 		this.routeid = this.props.navigation.state.params.id;
 		this.routeName = this.props.navigation.state.params.routename;
+		this.routeDescription = this.props.navigation.state.params.routedescription
 		this.state = {
 			stops: [],
 			buttonIsDisabled: false,
@@ -122,17 +124,33 @@ export default class RouteDetailsScreen extends Component {
 
 	render() {
 		let routeStops = this.state.stops.map((stop, index) => {
-			return <LocationCard addIcon={false} onPress={() => this.goToLocationDetail(stop.stopid)} key={stop.stopid} stop={stop} />;
+			return <LocationCard addIcon={true} onPress={() => this.goToLocationDetail(stop.stopid)} key={stop.stopid} id={index} stop={stop} />;
 		});
 		return (
 			<ScrollView>
-				<Text>{this.routeName}</Text>
-				{routeStops}
-				<Text> {this.state.crawlWarningMessage} </Text>
-				<Button block disabled={this.state.buttonIsDisabled} onPress={() => this.updateUsersActiveRouteAndSwitchScreens()} >
-					<Text> {this.state.buttonText} </Text>
-				</Button>
-			</ScrollView>
+				<Container>
+					<Content style={{ backgroundColor: "#F9F5E0" }}>
+						<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>{this.routeName}</Text>
+						<Text style={{ alignSelf: "center", color: "#A2978D", fontStyle: "italic", padding: 15, fontSize: 18, }}>{this.routeDescription}</Text>
+						{routeStops}
+						<Text> {this.state.crawlWarningMessage} </Text>
+						<ImageBackground source={require('../assets/buttonbg.png')} style={styles.buttonBackground}>
+							<TouchableOpacity
+								block
+								disabled={this.state.buttonIsDisabled}
+								onPress={() => {
+									this.updateUsersActiveRouteAndSwitchScreens();
+								}}
+							>
+								<Text style={{ color: "white", alignSelf: "center", height: 100 }}>{this.state.buttonText}</Text>
+							</TouchableOpacity>
+						</ImageBackground>
+						{/* <Button block disabled={this.state.buttonIsDisabled} onPress={() => this.updateUsersActiveRouteAndSwitchScreens()} >
+							<Text> {this.state.buttonText} </Text>
+						</Button> */}
+					</Content>
+				</Container>
+			</ScrollView >
 		);
 	}
 }

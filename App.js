@@ -92,6 +92,15 @@ export const styles = StyleSheet.create({
 		flexDirection: 'row',
 		left: 50,
 		bottom: -750,
+	},
+	activeRouteButton: {
+		width: 344,
+		height: 70,
+		padding: 20,
+		marginTop: 15,
+		marginLeft: 17,
+		marginRight: 5,
+		alignSelf: "center"
 	}
 });
 

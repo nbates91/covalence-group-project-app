@@ -16,7 +16,7 @@ export default class SignUp extends Component {
 		};
 	}
 	static navigationOptions = {
-		title: 'Sign up',
+		header: null
 	};
 
 	login() {
@@ -68,6 +68,7 @@ export default class SignUp extends Component {
 			level: 0,
 			numberofcheckins: 0,
 		};
+		alert("about to post user..");
 		fetch(`https://bham-hops.herokuapp.com/api/users/`,
 			{
 				method: 'POST',
@@ -77,9 +78,11 @@ export default class SignUp extends Component {
 				}),
 			})
 			.then(res => {
+				alert("User was supposed to be added to the db...");
 				this.login();
 			})
 			.catch(err => {
+				alert(err);
 				console.log(err);
 			});
 	}
@@ -125,6 +128,7 @@ export default class SignUp extends Component {
 				this.checkEverythingElse();
 			})
 			.catch(err => {
+				alert(err);
 				console.log(err);
 			});
 	}
@@ -159,7 +163,7 @@ export default class SignUp extends Component {
 								<TouchableOpacity
 									block
 									onPress={() => {
-										this.login();
+										this.handleSubmit();
 									}}
 								>
 									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>CREATE ACCOUNT</Text>

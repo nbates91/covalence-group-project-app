@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
-import { View, Alert, ScrollView, Linking, AsyncStorage } from 'react-native';
-import { Button, Text, Container } from 'native-base';
+import { View, Alert, ScrollView, Linking, AsyncStorage, ImageBackground, TouchableOpacity, Image } from 'react-native';
+import { Button, Text, Container, Content } from 'native-base';
 import LocationCard from '../components/locationcard';
 import { NavigationActions } from 'react-navigation';
-// import Icon from 'react-native-vector-icons/FontAwesome';
+import { styles } from '../../App';
+import Icon from 'react-native-vector-icons/Entypo';
 
 export default class ActiveRoute extends Component {
 	static navigationOptions = ({ navigation }) => ({
 		title: "Active Crawl",
-		headerRight: (
+		headerLeft: (
 			<Text
 				onPress={() => {
 					navigation.toggleDrawer();
 				}}
 			>
-				Menu
+				<Icon name="menu" size={30} color="#F9F5E0" />
 			</Text>
 		),
 
@@ -121,19 +122,25 @@ export default class ActiveRoute extends Component {
 			'Are you sure?',
 			[
 				{ text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-				{ text: 'OK', onPress: () => this.clearTheUsersActiveRouteAndNavigateToGameOver()},
+				{ text: 'OK', onPress: () => this.clearTheUsersActiveRouteAndNavigateToGameOver() },
 			],
 			{ cancelable: false }
 		);
 	}
 
 	checkIn(withPictureBoolean) {
-		this.state.user.numberofcheckins += 1;
-		this.setState({ numberofcheckins: this.state.numberofcheckins + 1});
+		let numberofcheckins = this.state.numberofcheckins + 1;
+		this.setState({
+			user: { ...this.state.user, numberofcheckins: numberofcheckins },
+			numberofcheckins: numberofcheckins
+		});
+		// this.state.user.numberofcheckins += 1;
+		// this.setState({ numberofcheckins: this.state.numberofcheckins + 1 });
 		this.updateUserCheckins(withPictureBoolean);
 	}
 
 	updateUserCheckins(withPictureBoolean) {
+		alert(this.state.numberofcheckins);
 		fetch(`https://bham-hops.herokuapp.com/api/users/${this.state.userID}`, {
 			method: 'PUT',
 			body: JSON.stringify(this.state.user),
@@ -145,11 +152,9 @@ export default class ActiveRoute extends Component {
 				if (withPictureBoolean) {
 					this.props.navigation.navigate("Camera");
 				}
-				else {
-					if (this.isRouteComplete()) {
-						// update the user's level here
-						this.clearTheUsersActiveRouteAndNavigateToGameOver();
-					}
+				if (this.isRouteComplete()) {
+					// update the user's level here
+					this.clearTheUsersActiveRouteAndNavigateToGameOver();
 				}
 			})
 			.catch(err => {
@@ -185,31 +190,95 @@ export default class ActiveRoute extends Component {
 	}
 
 	isRouteComplete() {
-		// return false;
 		return this.state.stops.length === this.state.user.numberofcheckins;
 	}
 
-	render() {
-		let routeStops = this.state.stops.map((stop, index) => {
-			return <LocationCard key={stop.stopid} addIcon={this.state.numberofcheckins > index} stop={stop} onPress={() => this.switchScreens(stop.stopid)} />;
+	goHome() {
+		this.props.navigation.navigate({
+			routeName: 'DrawerStack',
+			params: {},
+			action: NavigationActions.navigate({
+				routeName: 'Home',
+				params: {},
+			}),
 		});
-		return (
-			<ScrollView>
-				<Text>{this.state.route.routename}</Text>
-				{routeStops}
-				<Button block onPress={() => { this.checkInAlert(); }} >
-					<Text>Check in at current stop</Text>
-				</Button>
-				<Button block onPress={this.getDirections}>
-					<Text>Directions to next stop</Text>
-				</Button>
-				<Button block onPress={this.getRide}>
-					<Text>Uber</Text>
-				</Button>
-				<Button block onPress={this.tapOutAlert}>
-					<Text>Tapout</Text>
-				</Button>
-			</ScrollView>
-		);
+	}
+
+	render() {
+		if (this.state.routeID != null) {
+			let routeStops = this.state.stops.map((stop, index) => {
+				return <LocationCard key={stop.stopid} addIcon={this.state.numberofcheckins > index} stop={stop} onPress={() => this.switchScreens(stop.stopid)} />;
+			});
+			return (
+
+				<Container>
+					<Content style={{ backgroundColor: "#F9F5E0" }}>
+						<ScrollView>
+							<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>{this.state.route.routename}</Text>
+							{routeStops}
+							<Text>{this.state.numberofcheckins}</Text>
+							<ImageBackground source={require('../assets/buttonbg.png')} style={styles.activeRouteButton}>
+								<TouchableOpacity
+									block
+									onPress={() => { this.checkInAlert(); }}
+								>
+									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>Check in at current stop</Text>
+								</TouchableOpacity>
+							</ImageBackground>
+
+							<ImageBackground source={require('../assets/buttonbg.png')} style={styles.activeRouteButton}>
+								<TouchableOpacity
+									block
+									onPress={this.getDirections}
+								>
+									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>Directions to next stop</Text>
+								</TouchableOpacity>
+							</ImageBackground>
+
+							<ImageBackground source={require('../assets/buttonbg.png')} style={styles.activeRouteButton}>
+								<TouchableOpacity
+									block
+									onPress={this.getRide}
+								>
+									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>Get an Uber</Text>
+								</TouchableOpacity>
+							</ImageBackground>
+
+							<ImageBackground source={require('../assets/buttonbg.png')} style={styles.activeRouteButton}>
+								<TouchableOpacity
+									block
+									onPress={this.tapOutAlert}
+								>
+									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>Tapout</Text>
+								</TouchableOpacity>
+							</ImageBackground>
+						</ScrollView>
+					</Content>
+				</Container>
+
+			);
+		}
+		else {
+			return (
+				<ScrollView>
+					<Container>
+						<Content style={{ backgroundColor: "#F9F5E0" }}>
+							<Text> You have not selected a crawl. </Text>
+
+							<ImageBackground source={require('../assets/buttonbg.png')} style={styles.buttonBackground}>
+								<TouchableOpacity
+									block
+									onPress={() => { this.goHome() }}
+								>
+									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>Choose a crawl</Text>
+								</TouchableOpacity>
+							</ImageBackground>
+
+						</Content>
+					</Container>
+				</ScrollView>
+			);
+		}
+
 	}
 }

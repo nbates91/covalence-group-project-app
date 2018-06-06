@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Card, CardItem, Text, Body } from 'native-base';
+import { Image, View } from 'react-native';
+import { Button, Card, CardItem, Text, Body, Container, Content } from 'native-base';
 import { withNavigation, NavigationActions } from 'react-navigation';
 
 class RoutesCard extends Component {
@@ -23,21 +24,28 @@ class RoutesCard extends Component {
 		}
 	}
 
-	switchScreens(id, routename) {
-		this.props.navigation.navigate('RouteDetails', { id, routename });
+	switchScreens(id, routename, routedescription) {
+		this.props.navigation.navigate('RouteDetails', { id, routename, routedescription });
 	}
 
 	render() {
 		return (
-			<Card>
-				<CardItem style={{ backgroundColor: this.state.backgroundColor }} button onPress={() => this.switchScreens(this.props.id, this.props.route.routename)}>
-					<Body>
-						<Text style={{ fontWeight: "bold", }}>{this.props.route.routename}</Text>
-						<Text style={{ fontStyle: "italic" }}>Number of stops: {this.props.route.numberofstops}</Text>
-						<Text>{this.props.route.routedescription}</Text>
-					</Body>
-				</CardItem>
-			</Card>
+			<View style={{ flexDirection: 'row', height: 100 }}>
+				<Card style={{ flex: 1 }}>
+					<CardItem style={{ backgroundColor: this.state.backgroundColor, height: 98 }}>
+						<Image style={{ height: 65, width: 65 }} source={require('../assets/tanhop.png')}></Image>
+					</CardItem>
+				</Card>
+				<Card style={{ flex: 3 }}>
+					<CardItem style={{ backgroundColor: this.state.backgroundColor }} button onPress={() => this.switchScreens(this.props.id, this.props.route.routename, this.props.route.routedescription)}>
+						<Body>
+							<Text style={{ fontWeight: "bold", }}>{this.props.route.routename}</Text>
+							<Text style={{ fontStyle: "italic" }}>Number of stops: {this.props.route.numberofstops}</Text>
+							<Text>{this.props.route.routedescription.substring(0, 50)}...</Text>
+						</Body>
+					</CardItem>
+				</Card>
+			</View>
 		);
 	}
 }

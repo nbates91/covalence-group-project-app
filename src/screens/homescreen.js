@@ -6,7 +6,6 @@ import Icon from 'react-native-vector-icons/Entypo';
 
 export default class Homescreen extends Component {
 	static navigationOptions = ({ navigation }) => ({
-		title: 'Choose a Route!',
 		headerLeft: (
 			<Text
 				onPress={() => {

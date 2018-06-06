@@ -16,7 +16,15 @@ const HomeNavigator = createStackNavigator({
 			),
 		})
 	},
-	RouteDetails: { screen: RouteDetailsScreen },
+	RouteDetails: {
+		screen: RouteDetailsScreen,
+		navigationOptions: ({ navigation }) => ({
+			headerStyle: styles.header,
+			headerTitle: (
+				<Image style={{ marginTop: 30, width: 300, height: 100 }} source={require('../assets/headerlogo.png')} />
+			),
+		})
+	},
 	LocationDetails: { screen: LocationDetailsScreen },
 });
 
