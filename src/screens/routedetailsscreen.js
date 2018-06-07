@@ -127,9 +127,9 @@ export default class RouteDetailsScreen extends Component {
 			return <LocationCard addIcon={true} key={stop.stopid} id={index} stop={stop} onPress={() => this.goToLocationDetail(stop.stopid)} />;
 		});
 		return (
-			<ScrollView>
-				<Container>
-					<Content style={{ backgroundColor: "#F9F5E0" }}>
+			<Container>
+				<Content style={{ backgroundColor: "#F9F5E0" }}>
+					<ScrollView>
 						<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>{this.routeName}</Text>
 						<Text style={{ alignSelf: "center", color: "#A2978D", fontStyle: "italic", padding: 15, fontSize: 18, }}>{this.routeDescription}</Text>
 						{routeStops}
@@ -148,9 +148,9 @@ export default class RouteDetailsScreen extends Component {
 						{/* <Button block disabled={this.state.buttonIsDisabled} onPress={() => this.updateUsersActiveRouteAndSwitchScreens()} >
 							<Text> {this.state.buttonText} </Text>
 						</Button> */}
-					</Content>
-				</Container>
-			</ScrollView >
+					</ScrollView >
+				</Content>
+			</Container>
 		);
 	}
 }

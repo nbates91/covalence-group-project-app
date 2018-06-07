@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-import { ScrollView, AsyncStorage } from 'react-native';
+import { ScrollView, AsyncStorage, ImageBackground, TouchableOpacity } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Button, Text } from 'native-base';
 import * as baseService from '../services/base';
 import { styles } from '../../App';
+import Icon from 'react-native-vector-icons/Entypo';
 
 export default class ProfilePageScreen extends Component {
 	static navigationOptions = ({ navigation }) => ({
-		headerRight: (
+		headerLeft: (
 			<Text
 				onPress={() => {
 					navigation.toggleDrawer();
 				}}
 			>
-				Menu
+				<Icon name="menu" size={30} color="#F9F5E0" />
 			</Text>
 		),
 	});
@@ -122,11 +123,16 @@ export default class ProfilePageScreen extends Component {
 
 	render() {
 		return (
-			<ScrollView>
-				<Text> Profile Picture URL: {this.state.profilePictureURL} </Text>
-				<Text> User Email: {this.state.userEmail} </Text>
-				<Container>
-					<Content>
+			<Container>
+				<Content style={{ backgroundColor: "#F9F5E0" }}>
+					<ScrollView>
+						<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>PROFILE PAGE</Text>
+						<Text> Photos </Text>
+						{this.state.pictures.map((pic, index) => {
+							return <Text key={pic.id}> {pic.imageurl} </Text>;
+						})}
+						<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>ACCOUNT INFORMATION</Text>
+						<Text> User Email: {this.state.userEmail} </Text>
 						<Form>
 							<Item floatingLabel>
 								<Label>Password</Label>
@@ -147,22 +153,31 @@ export default class ProfilePageScreen extends Component {
 								/>
 							</Item>
 							<Text style={styles.errorRed}> {this.state.passwordErrorMessage} </Text>
-							<Button
+							{/* <Button
 								block
 								onPress={() => {
 									this.updatePassword();
 								}}
 							>
 								<Text>Update Password</Text>
-							</Button>
+							</Button> */}
+
+							<ImageBackground source={require('../assets/buttonbg.png')} style={styles.buttonBackground}>
+								<TouchableOpacity
+									block
+									onPress={() => {
+										this.updatePassword();
+									}}
+								>
+									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>UPDATE PASSWORD</Text>
+								</TouchableOpacity>
+							</ImageBackground>
+
 						</Form>
-						<Text> Photos </Text>
-						{this.state.pictures.map((pic, index) => {
-							return <Text key={pic.id}> {pic.imageurl} </Text>;
-						})}
-					</Content>
-				</Container>
-			</ScrollView>
+
+					</ScrollView>
+				</Content>
+			</Container>
 		);
 	}
 }
