@@ -7,7 +7,7 @@ import { styles } from '../../App';
 
 export default class RouteDetailsScreen extends Component {
 	static navigationOptions = ({ navigation }) => ({
-		title: "Crawl Details"
+		title: null
 	});
 	constructor(props) {
 		super(props);
@@ -124,7 +124,7 @@ export default class RouteDetailsScreen extends Component {
 
 	render() {
 		let routeStops = this.state.stops.map((stop, index) => {
-			return <LocationCard addIcon={true} onPress={() => this.goToLocationDetail(stop.stopid)} key={stop.stopid} id={index} stop={stop} />;
+			return <LocationCard addIcon={true} key={stop.stopid} id={index} stop={stop} onPress={() => this.goToLocationDetail(stop.stopid)} />;
 		});
 		return (
 			<ScrollView>

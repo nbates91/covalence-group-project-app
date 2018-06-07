@@ -85,10 +85,11 @@ export default class ProfilePageScreen extends Component {
 			if (this.state.newPassword === this.state.confirmPassword) {
 				let updatedUser = {
 					email: this.state.user.email,
-					hash: this.state.newPassword,
+					password: this.state.newPassword,
 					role: this.state.user.role,
 					level: this.state.user.level,
 					numberofcheckins: this.state.user.numberofcheckins,
+					activerouteid: this.state.user.activerouteid
 				};
 				fetch(`https://bham-hops.herokuapp.com/api/users/${this.state.userID}`, {
 					method: 'PUT',

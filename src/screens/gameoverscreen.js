@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { Button, Text } from 'native-base';
+import { View, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
+import { Button, Text, Container, Content } from 'native-base';
 import { NavigationActions } from 'react-navigation';
+import Icon from 'react-native-vector-icons/Entypo';
+import { styles } from '../../App'
 
 export default class GameOverScreen extends Component {
 	static navigationOptions = {
 		title: 'Game Over',
-		headerLeft: null
+		headerLeft: (
+			<Text
+				onPress={() => {
+					navigation.toggleDrawer();
+				}}
+			>
+				<Icon name="menu" size={30} color="#F9F5E0" />
+			</Text>
+		),
 	};
 
 	constructor(props) {
@@ -26,12 +36,20 @@ export default class GameOverScreen extends Component {
 
 	render() {
 		return (
-			<View>
-				<Text>Thanks for playing!</Text>
-				<Button block onPress={() => this.switchScreens()}>
-					<Text>Back to start</Text>
-				</Button>
-			</View>
+			<Container>
+				<Content style={{ backgroundColor: "#F9F5E0" }}>
+					<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>CRAWL COMPLETE</Text>
+					<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>Thanks for exploring Birmingham!</Text>
+					<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", fontStyle: 'italic', padding: 15, fontSize: 18, }}>See your latest crawl photos below:</Text>
+					<ImageBackground source={require('../assets/buttonbg.png')} style={styles.buttonBackground}>
+						<TouchableOpacity
+							block
+							onPress={() => this.switchScreens()}>
+							<Text style={{ color: "white", alignSelf: "center", height: 100 }}>VIEW CRAWLS</Text>
+						</TouchableOpacity>
+					</ImageBackground>
+				</Content>
+			</Container>
 		);
 	}
 }

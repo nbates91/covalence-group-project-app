@@ -25,7 +25,15 @@ const HomeNavigator = createStackNavigator({
 			),
 		})
 	},
-	LocationDetails: { screen: LocationDetailsScreen },
+	LocationDetails: {
+		screen: LocationDetailsScreen,
+		navigationOptions: ({ navigation }) => ({
+			headerStyle: styles.header,
+			headerTitle: (
+				<Image style={{ marginTop: 30, width: 300, height: 100 }} source={require('../assets/headerlogo.png')} />
+			),
+		})
+	},
 });
 
 export default HomeNavigator;

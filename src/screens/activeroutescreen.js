@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 
 export default class ActiveRoute extends Component {
 	static navigationOptions = ({ navigation }) => ({
-		title: "Active Crawl",
+		title: null,
 		headerLeft: (
 			<Text
 				onPress={() => {
@@ -140,7 +140,6 @@ export default class ActiveRoute extends Component {
 	}
 
 	updateUserCheckins(withPictureBoolean) {
-		alert(this.state.numberofcheckins);
 		fetch(`https://bham-hops.herokuapp.com/api/users/${this.state.userID}`, {
 			method: 'PUT',
 			body: JSON.stringify(this.state.user),
@@ -216,7 +215,6 @@ export default class ActiveRoute extends Component {
 						<ScrollView>
 							<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>{this.state.route.routename}</Text>
 							{routeStops}
-							<Text>{this.state.numberofcheckins}</Text>
 							<ImageBackground source={require('../assets/buttonbg.png')} style={styles.activeRouteButton}>
 								<TouchableOpacity
 									block

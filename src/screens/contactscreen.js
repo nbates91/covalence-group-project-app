@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView, Text } from 'react-native';
-import { Button } from 'native-base'
+import { Button, Textarea } from 'native-base'
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import { sendContactEmail } from '../services/contact';
 
@@ -79,11 +79,11 @@ export default class ContactScreen extends Component {
 				<FormLabel>Email</FormLabel>
 				<FormInput onChangeText={email => this.handleEmailChange(email)} />
 				<FormValidationMessage>Required</FormValidationMessage>
-				<FormLabel>Name</FormLabel>
+				<FormLabel>Title</FormLabel>
 				<FormInput onChangeText={name => this.handleNameChange(name)} />
 				<FormValidationMessage>Required</FormValidationMessage>
 				<FormLabel>Message</FormLabel>
-				<FormInput onChangeText={message => this.handleMessageChange(message)} />
+				<Textarea rowSpan={5} bordered placeholder="Type your message here!" onChangeText={message => this.handleMessageChange(message)} />
 				<FormValidationMessage>Required</FormValidationMessage>
 				<Button block disabled={this.state.isSubmitButtonDisabled} onPress={() => this.handleSubmit()} >
 					<Text> Submit Feedback </Text>

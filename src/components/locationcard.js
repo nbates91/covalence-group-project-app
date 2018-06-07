@@ -25,7 +25,7 @@ class LocationCard extends Component {
 					</CardItem>
 				</Card>
 				<Card style={{ flex: 5 }}>
-					<CardItem style={{ backgroundColor: backgroundColor, height: 50 }} button onPress={() => this.switchScreens(this.props.id, this.props.route.routename, this.props.route.routedescription)}>
+					<CardItem style={{ backgroundColor: backgroundColor, height: 50 }} button onPress={() => this.props.onPress()}>
 						<Body>
 							<Text style={{ fontWeight: "bold", }}>{this.props.stop.stops}</Text>
 						</Body>

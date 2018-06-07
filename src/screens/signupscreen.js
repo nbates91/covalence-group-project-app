@@ -67,8 +67,8 @@ export default class SignUp extends Component {
 			role: 'user',
 			level: 0,
 			numberofcheckins: 0,
+			actiiverouteid: null
 		};
-		alert("about to post user..");
 		fetch(`https://bham-hops.herokuapp.com/api/users/`,
 			{
 				method: 'POST',
@@ -78,7 +78,6 @@ export default class SignUp extends Component {
 				}),
 			})
 			.then(res => {
-				alert("User was supposed to be added to the db...");
 				this.login();
 			})
 			.catch(err => {

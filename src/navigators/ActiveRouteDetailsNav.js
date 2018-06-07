@@ -18,8 +18,24 @@ const ActiveRouteDetailsNavigator = createStackNavigator(
 				),
 			})
 		},
-		GameOver: { screen: GameOverScreen },
-		LocationDetails: { screen: LocationDetailsScreen },
+		GameOver: {
+			screen: GameOverScreen,
+			navigationOptions: ({ navigation }) => ({
+				headerStyle: styles.header,
+				headerTitle: (
+					<Image style={{ marginTop: 30, width: 300, height: 100 }} source={require('../assets/headerlogo.png')} />
+				),
+			})
+		},
+		LocationDetails: {
+			screen: LocationDetailsScreen,
+			navigationOptions: ({ navigation }) => ({
+				headerStyle: styles.header,
+				headerTitle: (
+					<Image style={{ marginTop: 30, width: 300, height: 100 }} source={require('../assets/headerlogo.png')} />
+				),
+			})
+		},
 		Camera: { screen: OpenCamera },
 	},
 	{ headerTitle: "Active Crawl" }

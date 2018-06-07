@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, Button, Linking } from 'react-native';
+import { ScrollView, Text, Button, Linking, ImageBackground, TouchableOpacity, Image } from 'react-native';
+import { styles } from '../../App';
 
 export default class LocationDetails extends Component {
-	static navigationOptions = ({ navigation }) => ({
-		title: "Location Details"
-	});
+
 	constructor(props) {
 		super(props);
 		this.id = this.props.navigation.state.params.id;
@@ -41,7 +40,17 @@ export default class LocationDetails extends Component {
 				<Text>{this.state.location.name}</Text>
 				<Text>{this.state.location.description}</Text>
 				<Text>{this.state.location.url}</Text>
-				<Button onPress={() => this.getLocationDetail()} title="More Details" />
+				{/* <Button onPress={() => this.getLocationDetail()} title="More Details" /> */}
+				<ImageBackground source={require('../assets/buttonbg.png')} style={styles.buttonBackground}>
+					<TouchableOpacity
+						block
+						onPress={() => {
+							this.getLocationDetail();
+						}}
+					>
+						<Text style={{ color: "white", alignSelf: "center", height: 100 }}>MORE DETAILS</Text>
+					</TouchableOpacity>
+				</ImageBackground>
 			</ScrollView>
 		);
 	}
