@@ -101,6 +101,25 @@ export const styles = StyleSheet.create({
 		marginLeft: 17,
 		marginRight: 5,
 		alignSelf: "center"
+	},
+	container: {
+		flex: 1,
+		flexDirection: 'column',
+		backgroundColor: '#FAFAFA',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	imageBtn: {
+		height: 80,
+		width: 80,
+		borderRadius: 40,
+		backgroundColor: '#333',
+		marginBottom: 20
+	},
+	image: {
+		height: 80,
+		width: 80,
+		borderRadius: 40
 	}
 });
 
