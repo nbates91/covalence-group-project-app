@@ -59,10 +59,11 @@ export default class UploadImage extends Component {
 
     render() {
         return (
-            <View style={style.container} >
-                <Text>Teact Native Image Upload with Cloudinary!</Text>
+            <View style={styles.container} >
+                <Text>React Native Image Upload with Cloudinary!</Text>
                 <TouchableOpacity onPress={this.submit} style={styles.imageBtn} >
-                    <Image source={this.state.avatarSource} styles={styles.image} />
+                    <Image source={this.state.avatarSource} />
+                    {/* <Image source={this.state.avatarSource} styles={styles.image} /> */}
                 </TouchableOpacity>
             </View>
         )

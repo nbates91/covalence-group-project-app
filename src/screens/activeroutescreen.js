@@ -149,7 +149,8 @@ export default class ActiveRoute extends Component {
 		})
 			.then((res) => {
 				if (withPictureBoolean) {
-					this.props.navigation.navigate("Camera");
+					let userID = this.state.userID;
+					this.props.navigation.navigate("Camera", { userID });
 				}
 				if (this.isRouteComplete()) {
 					// update the user's level here
@@ -220,7 +221,7 @@ export default class ActiveRoute extends Component {
 									block
 									onPress={() => { this.checkInAlert(); }}
 								>
-									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>Check in at current stop</Text>
+									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>CHECK IN AT CURRENT STOP</Text>
 								</TouchableOpacity>
 							</ImageBackground>
 
@@ -229,7 +230,7 @@ export default class ActiveRoute extends Component {
 									block
 									onPress={this.getDirections}
 								>
-									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>Directions to next stop</Text>
+									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>DIRECTIONS TO NEXT STOP</Text>
 								</TouchableOpacity>
 							</ImageBackground>
 
@@ -238,7 +239,7 @@ export default class ActiveRoute extends Component {
 									block
 									onPress={this.getRide}
 								>
-									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>Get an Uber</Text>
+									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>GET AN UBER</Text>
 								</TouchableOpacity>
 							</ImageBackground>
 
@@ -247,7 +248,7 @@ export default class ActiveRoute extends Component {
 									block
 									onPress={this.tapOutAlert}
 								>
-									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>Tapout</Text>
+									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>TAPOUT</Text>
 								</TouchableOpacity>
 							</ImageBackground>
 						</ScrollView>
