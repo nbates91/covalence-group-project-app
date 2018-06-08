@@ -49,7 +49,7 @@ export default class RouteDetailsScreen extends Component {
 					if (user.activerouteid === this.routeid) { // if the user selected the route they're actively crawling...
 						this.setState({
 							buttonIsDisabled: false,	// enable button
-							buttonText: "View Active Crawl",
+							buttonText: "VIEW ACTIVE CRAWL",
 							crawlWarningMessage: ""
 						});
 					}
@@ -57,7 +57,7 @@ export default class RouteDetailsScreen extends Component {
 						this.setState({
 							buttonIsDisabled: true,	// disable the button
 							crawlWarningMessage: "You cannot start another crawl until you complete or tap out of your current crawl.",
-							buttonText: "Start This Crawl"
+							buttonText: "START THIS CRAWL"
 						});
 					}
 				}
@@ -65,7 +65,7 @@ export default class RouteDetailsScreen extends Component {
 					this.setState({
 						buttonIsDisabled: false, // enable button
 						crawlWarningMessage: "",
-						buttonText: "Start This Crawl"
+						buttonText: "START THIS CRAWL"
 					});
 				}
 			})
