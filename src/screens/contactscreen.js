@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
-import { ScrollView, Text } from 'react-native';
-import { Button } from 'native-base'
+import { ScrollView, Text, ImageBackground, TouchableOpacity } from 'react-native';
+import { Button, Textarea, Content, Container } from 'native-base'
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import { sendContactEmail } from '../services/contact';
+import { styles } from '../../App'
+import Icon from 'react-native-vector-icons/Entypo';
 
 export default class ContactScreen extends Component {
 	static navigationOptions = ({ navigation }) => ({
-		headerRight: (
+		headerLeft: (
 			<Text
 				onPress={() => {
 					navigation.toggleDrawer();
 				}}
 			>
-				Menu
+				<Icon name="menu" size={30} color="#F9F5E0" />
 			</Text>
 		),
 	});
@@ -74,21 +76,37 @@ export default class ContactScreen extends Component {
 
 	render() {
 		return (
-			<ScrollView>
-				<Text>Please let us know of any issues/bugs that you may have encountered!</Text>
-				<FormLabel>Email</FormLabel>
-				<FormInput onChangeText={email => this.handleEmailChange(email)} />
-				<FormValidationMessage>Required</FormValidationMessage>
-				<FormLabel>Name</FormLabel>
-				<FormInput onChangeText={name => this.handleNameChange(name)} />
-				<FormValidationMessage>Required</FormValidationMessage>
-				<FormLabel>Message</FormLabel>
-				<FormInput onChangeText={message => this.handleMessageChange(message)} />
-				<FormValidationMessage>Required</FormValidationMessage>
-				<Button block disabled={this.state.isSubmitButtonDisabled} onPress={() => this.handleSubmit()} >
-					<Text> Submit Feedback </Text>
-				</Button>
-			</ScrollView>
+			<Container>
+				<ImageBackground source={require('../assets/contactbgpic.png')} style={styles.backgroundImage}>
+					<Content>
+						<ScrollView>
+							<Text style={{ alignSelf: "center", color: "#404041", fontWeight: "bold", padding: 15, fontSize: 20, }}>CONTACT US</Text>
+							<Text style={{ alignSelf: "center", color: "#404041", fontWeight: "bold", fontStyle: 'italic', padding: 15, fontSize: 14, }}>Please let us know of any issues/bugs that you may have encountered!</Text>
+							<FormLabel>Email</FormLabel>
+							<FormInput onChangeText={email => this.handleEmailChange(email)} />
+							<FormValidationMessage>Required</FormValidationMessage>
+							<FormLabel>Title</FormLabel>
+							<FormInput onChangeText={name => this.handleNameChange(name)} />
+							<FormValidationMessage>Required</FormValidationMessage>
+							<FormLabel>Message</FormLabel>
+							<Textarea rowSpan={5} bordered placeholder="Type your message here!" onChangeText={message => this.handleMessageChange(message)} />
+							<FormValidationMessage>Required</FormValidationMessage>
+							{/* <Button block disabled={this.state.isSubmitButtonDisabled} onPress={() => this.handleSubmit()} >
+								<Text> Submit Feedback </Text>
+							</Button> */}
+							<ImageBackground source={require('../assets/buttonbg.png')} style={styles.buttonBackground}>
+								<TouchableOpacity
+									block
+									disabled={this.state.isSubmitButtonDisabled}
+									onPress={() => this.handleSubmit()}
+								>
+									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>SUBMIT FEEDBACK</Text>
+								</TouchableOpacity>
+							</ImageBackground>
+						</ScrollView>
+					</Content>
+				</ImageBackground>
+			</Container>
 		);
 	}
 }

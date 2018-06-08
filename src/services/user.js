@@ -2,6 +2,7 @@ import * as baseService from './base';
 
 let loggedIn = false;
 const url = 'https://bham-hops.herokuapp.com';
+// const url = 'http://localhost:3000';
 
 async function isLoggedIn() {
 	await checkLogin();

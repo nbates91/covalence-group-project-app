@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, Button, Linking } from 'react-native';
+import { ScrollView, Text, Button, Linking, ImageBackground, TouchableOpacity, Image } from 'react-native';
+import { Content } from 'native-base';
+import { styles } from '../../App';
 
 export default class LocationDetails extends Component {
-	static navigationOptions = ({ navigation }) => ({
-		title: "Location Details"
-	});
+
 	constructor(props) {
 		super(props);
 		this.id = this.props.navigation.state.params.id;
@@ -37,12 +37,14 @@ export default class LocationDetails extends Component {
 
 	render() {
 		return (
-			<ScrollView>
-				<Text>{this.state.location.name}</Text>
-				<Text>{this.state.location.description}</Text>
-				<Text>{this.state.location.url}</Text>
-				<Button onPress={() => this.getLocationDetail()} title="More Details" />
-			</ScrollView>
+			<Content style={styles.backgroundColor}>
+				<ScrollView>
+					<Text>{this.state.location.url}</Text>
+					<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>{this.state.location.name}</Text>
+					<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15 }}>{this.state.location.description}</Text>
+					<Text onPress={() => { this.getLocationDetail() }} style={{ color: "#A2978D", fontStyle: "italic", alignSelf: "center", height: 100, fontSize: 18 }}>View on Google Maps</Text>
+				</ScrollView>
+			</Content>
 		);
 	}
 }
