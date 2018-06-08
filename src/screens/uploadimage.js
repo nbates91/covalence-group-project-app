@@ -9,7 +9,7 @@ export default class UploadImage extends Component {
         super(props);
         this.state = {
             avatarSource: "",
-            uploadImage: false
+            uploadImg: false
         }
     }
 
@@ -17,7 +17,7 @@ export default class UploadImage extends Component {
         return RNFetchBlob.fetch('POST', 'https://api.cloudinary.com/v1_1/hxkggeeaw/image/upload?upload_preset=gbe07ivt', {
             'Content-Type': 'multipart/form-data'
         }, [
-                { name: 'file', filename: file.fileName, data: RNFetchBlob.wrap(file.origURL) }
+                { name: 'file', filename: file.fileName, data: RNFetchBlob.wrap(file.path) }
             ])
     }
 
@@ -28,11 +28,13 @@ export default class UploadImage extends Component {
                 skipBackup: true,
                 path: 'images'
             }
-        }
+        };
 
-        this.setState({
-            uploadImg: true
-        });
+        () => {
+            this.setState({
+                uploadImg: true
+            });
+        };
 
         ImagePicker.showImagePicker(options, (res) => {
             if (res.didCancel) {
@@ -45,7 +47,7 @@ export default class UploadImage extends Component {
                 console.log('User tapped the custom button: ', res.customButton);
             }
             else {
-                uploadFile(res)
+                this.uploadFile(res)
                     .then(res => res.json())
                     .then(result => {
                         this.setState({
@@ -61,7 +63,7 @@ export default class UploadImage extends Component {
         return (
             <View style={styles.container} >
                 <Text>React Native Image Upload with Cloudinary!</Text>
-                <TouchableOpacity onPress={this.submit} style={styles.imageBtn} >
+                <TouchableOpacity onPress={() => this.submit()} style={styles.imageBtn} >
                     <Image source={this.state.avatarSource} />
                     {/* <Image source={this.state.avatarSource} styles={styles.image} /> */}
                 </TouchableOpacity>
