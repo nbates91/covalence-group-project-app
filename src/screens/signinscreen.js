@@ -90,7 +90,7 @@ export default class SignInScreen extends Component {
 									their password in the DB to the new (long crazy) password so when they try 
 									to log in, it will let them. Once they've logged in with the new (long crazy) 
 									password, they can go to the profile page screen and change their password.  */}
-							<Text style={{ alignSelf: "center" }} onPress={() => alert('Pressed!')}>Forgot Your Password?</Text>
+							{/* <Text style={{ alignSelf: "center" }} onPress={() => alert('Pressed!')}>Forgot Your Password?</Text> */}
 							<Container style={styles.footer}>
 								<Text> Don't have an account yet? </Text>
 								<Text onPress={() => this.props.navigation.navigate('SignUp')} style={{ fontWeight: "bold" }}>Sign Up!</Text>

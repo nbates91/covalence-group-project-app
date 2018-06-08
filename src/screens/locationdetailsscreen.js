@@ -43,6 +43,16 @@ export default class LocationDetails extends Component {
 					<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>{this.state.location.name}</Text>
 					<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15 }}>{this.state.location.description}</Text>
 					<Text onPress={() => { this.getLocationDetail() }} style={{ color: "#A2978D", fontStyle: "italic", alignSelf: "center", height: 100, fontSize: 18 }}>View on Google Maps</Text>
+					{/* <ImageBackground source={require('../assets/buttonbg.png')} style={styles.buttonBackground}>
+						<TouchableOpacity
+							block
+							onPress={() => {
+								this.getLocationDetail();
+							}}
+						>
+							<Text style={{ color: "white", alignSelf: "center", height: 100 }}>MORE DETAILS</Text>
+						</TouchableOpacity>
+					</ImageBackground> */}
 				</ScrollView>
 			</Content>
 		);

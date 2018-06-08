@@ -132,13 +132,17 @@ export default class SignUp extends Component {
 			});
 	}
 
+	goBack() {
+		this.props.navigation.navigate('SignIn');
+	}
+
 	render() {
 		return (
 			<Container>
 				<ImageBackground source={require('../assets/backgroundimage_copy.png')} style={styles.backgroundImage}>
 					<Content>
-						<Image style={{ marginTop: 50, alignSelf: "center", width: 250, height: 250, resizeMode: 'contain' }} source={require('../assets/cclogo.png')} />
-						<Form>
+						<Image style={{ marginTop: 50, alignSelf: "center", width: 200, height: 200, resizeMode: 'contain' }} source={require('../assets/cclogo.png')} />
+						<Form style={{ marginTop: -45 }}>
 							<Item floatingLabel>
 								<Label>Email</Label>
 								<Input onChangeText={email => this.setState({ email })} />
@@ -166,6 +170,16 @@ export default class SignUp extends Component {
 									}}
 								>
 									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>CREATE ACCOUNT</Text>
+								</TouchableOpacity>
+							</ImageBackground>
+							<ImageBackground source={require('../assets/buttonbg.png')} style={styles.buttonBackground}>
+								<TouchableOpacity
+									block
+									onPress={() => {
+										this.goBack();
+									}}
+								>
+									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>CANCEL</Text>
 								</TouchableOpacity>
 							</ImageBackground>
 						</Form>
