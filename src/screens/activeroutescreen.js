@@ -204,7 +204,7 @@ export default class ActiveRoute extends Component {
 	}
 
 	render() {
-		if (this.state.routeID != null) {
+		if (this.state.routeID !== null) {
 			let routeStops = this.state.stops.map((stop, index) => {
 				return <LocationCard key={stop.stopid} addIcon={this.state.numberofcheckins > index} stop={stop} onPress={() => this.switchScreens(stop.stopid)} />;
 			});
@@ -261,14 +261,14 @@ export default class ActiveRoute extends Component {
 				<ScrollView>
 					<Container>
 						<Content style={{ backgroundColor: "#F9F5E0" }}>
-							<Text> You have not selected a crawl. </Text>
+							<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>You have not selected a crawl.</Text>
 
 							<ImageBackground source={require('../assets/buttonbg.png')} style={styles.buttonBackground}>
 								<TouchableOpacity
 									block
 									onPress={() => { this.goHome() }}
 								>
-									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>Choose a crawl</Text>
+									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>CHOOSE A CRAWL</Text>
 								</TouchableOpacity>
 							</ImageBackground>
 

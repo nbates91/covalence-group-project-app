@@ -40,6 +40,7 @@ export default class ContactScreen extends Component {
 		} else {
 			sendContactEmail(this.state.name, this.state.email, this.state.message)
 				.then(() => {
+					this.setState({ name: '', email: '', message: '' })
 					alert('Thank you, your feedback means a lot to us!');
 				})
 				.catch(err => {
@@ -83,13 +84,13 @@ export default class ContactScreen extends Component {
 							<Text style={{ alignSelf: "center", color: "#404041", fontWeight: "bold", padding: 15, fontSize: 20, }}>CONTACT US</Text>
 							<Text style={{ alignSelf: "center", color: "#404041", fontWeight: "bold", fontStyle: 'italic', padding: 15, fontSize: 14, }}>Please let us know of any issues/bugs that you may have encountered!</Text>
 							<FormLabel>Email</FormLabel>
-							<FormInput onChangeText={email => this.handleEmailChange(email)} />
+							<FormInput value={this.state.email} onChangeText={email => this.handleEmailChange(email)} />
 							<FormValidationMessage>Required</FormValidationMessage>
 							<FormLabel>Title</FormLabel>
-							<FormInput onChangeText={name => this.handleNameChange(name)} />
+							<FormInput value={this.state.name} onChangeText={name => this.handleNameChange(name)} />
 							<FormValidationMessage>Required</FormValidationMessage>
 							<FormLabel>Message</FormLabel>
-							<Textarea rowSpan={5} bordered placeholder="Type your message here!" onChangeText={message => this.handleMessageChange(message)} />
+							<Textarea value={this.state.message} rowSpan={5} bordered placeholder="Type your message here!" onChangeText={message => this.handleMessageChange(message)} />
 							<FormValidationMessage>Required</FormValidationMessage>
 							{/* <Button block disabled={this.state.isSubmitButtonDisabled} onPress={() => this.handleSubmit()} >
 								<Text> Submit Feedback </Text>
