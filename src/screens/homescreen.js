@@ -39,11 +39,11 @@ export default class Homescreen extends Component {
 			<Container>
 				<Content style={{ backgroundColor: "#F9F5E0" }}>
 					<ScrollView >
-						<Content >
+						<Content style={{ flex: 1 }}>
 							<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>AVAILABLE CRAWLS</Text>
-							{this.state.routes.map((route, index) => {
+							{this.state.routes.map((route) => {
 								return (
-									<RoutesCard key={route.routeid} route={route} id={route.routeid} />
+									<RoutesCard style={{ flex: 1, justifContent: 'center' }} key={route.routeid} route={route} id={route.routeid} />
 								);
 							})}
 						</Content>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView, Text, ImageBackground, TouchableOpacity } from 'react-native';
-import { Button, Textarea, Content, Container } from 'native-base'
+import { Textarea, Content, Container } from 'native-base'
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import { sendContactEmail } from '../services/contact';
 import { styles } from '../../App'

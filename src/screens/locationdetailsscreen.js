@@ -15,7 +15,6 @@ export default class LocationDetails extends Component {
 	}
 
 	componentWillMount() {
-
 		fetch(`https://bham-hops.herokuapp.com/api/locations/${this.id}`)
 			.then(async res => {
 				return res.json();

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, Form, Item, Input, Label, Button, Text, View, Card } from 'native-base';
+import { Container, Content, Form, Item, Input, Label, Text } from 'native-base';
 import * as userService from '../services/user';
-import { AsyncStorage, ImageBackground, Image, TouchableOpacity } from 'react-native';
+import { ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { styles } from '../../App';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class SignInScreen extends Component {
 	static navigationOptions = {
-		header: null
+		header: null,
+		modalVisible: false
 	};
 
 	constructor(props) {
@@ -56,6 +57,10 @@ export default class SignInScreen extends Component {
 			// 	<Button><Text>Send Email!</Text></Button>
 			// </Form >
 		)
+	}
+
+	setModalVisible(visible) {
+		this.setState({ modalVisible: visible })
 	}
 
 	render() {
