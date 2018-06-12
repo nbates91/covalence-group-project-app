@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { View, Alert, ScrollView, Linking, AsyncStorage, ImageBackground, TouchableOpacity, Image } from 'react-native';
-import { Button, Text, Container, Content } from 'native-base';
+import { Alert, ScrollView, Linking, AsyncStorage, ImageBackground, TouchableOpacity, Platform } from 'react-native';
+import { Text, Container, Content } from 'native-base';
 import LocationCard from '../components/locationcard';
 import { NavigationActions } from 'react-navigation';
 import { styles } from '../../App';
 import Icon from 'react-native-vector-icons/Entypo';
+import ImagePicker from 'react-native-image-picker';
+import RNFetchBlob from 'react-native-fetch-blob';
+import { post } from '../services/base'
 
 export default class ActiveRoute extends Component {
 	static navigationOptions = ({ navigation }) => ({
@@ -29,7 +32,9 @@ export default class ActiveRoute extends Component {
 			stops: [],
 			userID: null,
 			user: null,
-			numberofcheckins: null // this variable is only used so can change state (which makes the page reload) - location.reload() doesn't work...
+			numberofcheckins: null, // this variable is only used so can change state (which makes the page reload) - location.reload() doesn't work...
+			uploadImg: false,
+			url: '',
 		};
 	}
 
@@ -162,13 +167,77 @@ export default class ActiveRoute extends Component {
 			});
 	}
 
+	uploadFile(file) {
+		let path;
+		if (Platform.OS === 'ios') {
+			path = file.origURL;
+		} else {
+			path = file.path;
+		}
+		return RNFetchBlob.fetch('POST', 'https://api.cloudinary.com/v1_1/hxkggeeaw/image/upload?upload_preset=gbe07ivt', {
+			'Content-Type': 'multipart/form-data'
+		}, [
+				{ name: 'file', filename: file.fileName, data: RNFetchBlob.wrap(path) }
+			])
+	}
+
+	postToDb(url) {
+		return post('https://bham-hops.herokuapp.com/api/image',
+			{
+				url: url
+			}
+		);
+	}
+
+	submit() {
+		let options = {
+			title: 'Select Image',
+			storageOptions: {
+				skipBackup: true,
+				path: 'images'
+			}
+		};
+
+		() => {
+			this.setState({
+				uploadImg: true
+			});
+		};
+
+		ImagePicker.showImagePicker(options, (res) => {
+			if (res.didCancel) {
+				console.log('User cancelled image picker');
+			}
+			else if (res.error) {
+				console.log('Image Picker Error: ', res.error);
+			}
+			else if (res.customButton) {
+				console.log('User tapped the custom button: ', res.customButton);
+			}
+			else {
+				this.uploadFile(res)
+					.then(res => res.json())
+					.then(result => {
+						this.setState({
+							uploadImg: false,
+							url: result.secure_url
+						});
+						return result.secure_url;
+					}).then((url) => {
+						return this.postToDb(url);
+					});
+				this.checkIn(true);
+			}
+		});
+	}
+
 	checkInAlert() {
 		Alert.alert(
 			'Check-in',
 			'With or without a picture?',
 			[
 				{ text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-				{ text: 'With Picture', onPress: () => this.checkIn(true) },
+				{ text: 'With Picture', onPress: () => this.submit() },
 				{ text: 'Without Picture', onPress: () => this.checkIn(false), style: 'cancel' },
 			],
 			{ cancelable: false }

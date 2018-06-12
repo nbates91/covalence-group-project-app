@@ -30,9 +30,9 @@ class RoutesCard extends Component {
 
 	render() {
 		return (
-			<View style={{ flexDirection: 'row', height: 100 }}>
-				<Card style={{ flex: 1 }}>
-					<CardItem style={{ backgroundColor: this.state.backgroundColor, height: 98 }}>
+			<View style={{ flexDirection: 'row' }}>
+				<Card style={{ flex: 1, backgroundColor: this.state.backgroundColor }}>
+					<CardItem style={{ backgroundColor: this.state.backgroundColor, justifyContent: 'center' }}>
 						<Image style={{ height: 65, width: 65 }} source={require('../assets/tanhop.png')}></Image>
 					</CardItem>
 				</Card>
