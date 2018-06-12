@@ -226,7 +226,7 @@ export default class ActiveRoute extends Component {
 					}).then((url) => {
 						return this.postToDb(url);
 					});
-				this.checkIn(true);
+				this.checkIn(false);
 			}
 		});
 	}
