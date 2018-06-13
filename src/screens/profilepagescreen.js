@@ -127,9 +127,9 @@ export default class ProfilePageScreen extends Component {
 				<Content style={{ backgroundColor: "#F9F5E0" }}>
 					<ScrollView>
 						<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>PROFILE PAGE</Text>
-						<Text> Photos </Text>
-						{this.state.pictures.map((pic, index) => {
-							return <Text key={pic.id}> {pic.imageurl} </Text>;
+						<Text onPress={() => this.getPictures()}> Photos </Text>
+						{this.state.pictures.map((pic) => {
+							return <Text key={pic.imageid}> {pic.url} </Text>;
 						})}
 						<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>ACCOUNT INFORMATION</Text>
 						<Text> User Email: {this.state.userEmail} </Text>
@@ -153,15 +153,6 @@ export default class ProfilePageScreen extends Component {
 								/>
 							</Item>
 							<Text style={styles.errorRed}> {this.state.passwordErrorMessage} </Text>
-							{/* <Button
-								block
-								onPress={() => {
-									this.updatePassword();
-								}}
-							>
-								<Text>Update Password</Text>
-							</Button> */}
-
 							<ImageBackground source={require('../assets/buttonbg.png')} style={styles.buttonBackground}>
 								<TouchableOpacity
 									block
@@ -172,9 +163,7 @@ export default class ProfilePageScreen extends Component {
 									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>UPDATE PASSWORD</Text>
 								</TouchableOpacity>
 							</ImageBackground>
-
 						</Form>
-
 					</ScrollView>
 				</Content>
 			</Container>
