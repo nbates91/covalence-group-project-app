@@ -31,27 +31,27 @@ export default class OpenCamera extends Component {
 		);
 	}
 
-	// postImageToDB(uri) {
-	// 	fetch(`https://bham-hops.herokuapp.com/api/image/`,
-	// 		{
-	// 			method: 'POST',
-	// 			body: JSON.stringify({
-	// 				url: uri,
-	// 				userid: this.userID
-	// 			}),
-	// 			headers: new Headers({
-	// 				'Content-Type': 'application/json',
-	// 			}),
-	// 		})
-	// 		.then(res => {
-	// 			cloudinary.v2.uploader.upload(uri, function (error, result) { console.log(result); });
-	// 			// navigate to another screen
-	// 		})
-	// 		.catch(err => {
-	// 			alert(err);
-	// 			console.log(err);
-	// 		});
-	// }
+	postImageToDB(uri) {
+		fetch(`https://bham-hops.herokuapp.com/api/image/`,
+			{
+				method: 'POST',
+				body: JSON.stringify({
+					url: uri,
+					userid: this.userID
+				}),
+				headers: new Headers({
+					'Content-Type': 'application/json',
+				}),
+			})
+			// .then(res => {
+			// 	cloudinary.v2.uploader.upload(uri, function (error, result) { console.log(result); });
+			// 	// navigate to another screen
+			// })
+			.catch(err => {
+				alert(err);
+				console.log(err);
+			});
+	}
 
 	// 	takePicture = async function () {
 	// 		if (this.camera) {
