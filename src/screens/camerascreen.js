@@ -2,8 +2,13 @@
 import React, { Component } from 'react';
 import { AppRegistry, Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
+// import * as cloudinary from 'cloudinary';
 
 export default class OpenCamera extends Component {
+	constructor(props) {
+		super(props);
+		this.userID = this.props.navigation.state.params.userID;
+	}
 	render() {
 		return (
 			<View style={styles.container}>
@@ -26,13 +31,36 @@ export default class OpenCamera extends Component {
 		);
 	}
 
-	takePicture = async function() {
-		if (this.camera) {
-			const options = { quality: 0.5, base64: true };
-			const data = await this.camera.takePictureAsync(options);
-			console.log(data.uri);
-		}
-	};
+	// postImageToDB(uri) {
+	// 	fetch(`https://bham-hops.herokuapp.com/api/image/`,
+	// 		{
+	// 			method: 'POST',
+	// 			body: JSON.stringify({
+	// 				url: uri,
+	// 				userid: this.userID
+	// 			}),
+	// 			headers: new Headers({
+	// 				'Content-Type': 'application/json',
+	// 			}),
+	// 		})
+	// 		.then(res => {
+	// 			cloudinary.v2.uploader.upload(uri, function (error, result) { console.log(result); });
+	// 			// navigate to another screen
+	// 		})
+	// 		.catch(err => {
+	// 			alert(err);
+	// 			console.log(err);
+	// 		});
+	// }
+
+	// 	takePicture = async function () {
+	// 		if (this.camera) {
+	// 			const options = { quality: 0.5, base64: true };
+	// 			const data = await this.camera.takePictureAsync(options);
+	// 			this.postImageToDB(data.uri);
+	// 			// console.log(data.uri);
+	// 		}
+	// 	};
 }
 
 const styles = StyleSheet.create({

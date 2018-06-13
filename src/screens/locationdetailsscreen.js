@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ScrollView, Text, Button, Linking, ImageBackground, TouchableOpacity, Image } from 'react-native';
 import { Content } from 'native-base';
 import { styles } from '../../App';
+// import cloudinary from 'cloudinary-core';
 
 export default class LocationDetails extends Component {
 
@@ -14,7 +15,6 @@ export default class LocationDetails extends Component {
 	}
 
 	componentWillMount() {
-
 		fetch(`https://bham-hops.herokuapp.com/api/locations/${this.id}`)
 			.then(async res => {
 				return res.json();
@@ -39,12 +39,24 @@ export default class LocationDetails extends Component {
 		return (
 			<Content style={styles.backgroundColor}>
 				<ScrollView>
-					<Text>{this.state.location.url}</Text>
+					<Image source={{ uri: this.state.location.url }} />
+					{/* cloudinary.image({this.state.location.url}, {width: 100, height: 150, crop: "fill" }) */}
+					{/* <Text>{this.state.location.url}</Text> */}
 					<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>{this.state.location.name}</Text>
 					<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15 }}>{this.state.location.description}</Text>
-					<Text onPress={() => { this.getLocationDetail() }} style={{ color: "#A2978D", fontStyle: "italic", alignSelf: "center", height: 100, fontSize: 18 }}>View on Google Maps</Text>
+					{/* <Text onPress={() => { this.getLocationDetail() }} style={{ color: "#A2978D", fontStyle: "italic", alignSelf: "center", height: 100, fontSize: 18 }}>View on Google Maps</Text> */}
+					<ImageBackground source={require('../assets/buttonbg.png')} style={styles.buttonBackground}>
+						<TouchableOpacity
+							block
+							onPress={() => {
+								this.getLocationDetail();
+							}}
+						>
+							<Text style={{ color: "white", alignSelf: "center", height: 100 }}>MORE DETAILS</Text>
+						</TouchableOpacity>
+					</ImageBackground>
 				</ScrollView>
-			</Content>
+			</Content >
 		);
 	}
 }

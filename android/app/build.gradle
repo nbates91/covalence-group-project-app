@@ -137,6 +137,10 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-vector-icons')
+    compile project(':react-native-image-picker')
+    compile project(':react-native-fetch-blob')
+    compile project(':react-native-camera')
     implementation (project(':react-native-vector-icons'))
     implementation (project(':react-native-camera'))
     implementation (project(':react-native-camera')) {
@@ -146,7 +150,7 @@ dependencies {
     implementation "com.android.support:support-annotations:+"
     implementation "com.android.support:support-v4:27.+"
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.android.support:appcompat-v7:23.0.1"
+    implementation "com.android.support:appcompat-v7:27.1.1"
     implementation "com.facebook.react:react-native:+"  // From node_modules
 }
 
@@ -157,7 +161,14 @@ task copyDownloadableDepsToLibs(type: Copy) {
     into 'libs'
 }
 
-// allprojects {
+allprojects {
+     repositories {
+         google()
+         jcenter()
+         maven {
+             url "https://maven.google.com"
+         }
+     }
 //     configurations.all {
 //         resolutionStrategy {
 //             eachDependency { DependencyResolveDetails details ->
@@ -167,4 +178,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
 //             }
 //         }
 //     }
-// }
+ }

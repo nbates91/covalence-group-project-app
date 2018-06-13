@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, Form, Item, Input, Label, Button, Text, View, Card } from 'native-base';
+import { Container, Content, Form, Item, Input, Label, Text } from 'native-base';
 import * as userService from '../services/user';
-import { AsyncStorage, ImageBackground, Image, TouchableOpacity } from 'react-native';
+import { ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { styles } from '../../App';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class SignInScreen extends Component {
 	static navigationOptions = {
-		header: null
+		header: null,
+		modalVisible: false
 	};
 
 	constructor(props) {
@@ -58,6 +59,10 @@ export default class SignInScreen extends Component {
 		)
 	}
 
+	setModalVisible(visible) {
+		this.setState({ modalVisible: visible })
+	}
+
 	render() {
 		return (
 			<Container>
@@ -90,7 +95,7 @@ export default class SignInScreen extends Component {
 									their password in the DB to the new (long crazy) password so when they try 
 									to log in, it will let them. Once they've logged in with the new (long crazy) 
 									password, they can go to the profile page screen and change their password.  */}
-							<Text style={{ alignSelf: "center" }} onPress={() => alert('Pressed!')}>Forgot Your Password?</Text>
+							{/* <Text style={{ alignSelf: "center" }} onPress={() => alert('Pressed!')}>Forgot Your Password?</Text> */}
 							<Container style={styles.footer}>
 								<Text> Don't have an account yet? </Text>
 								<Text onPress={() => this.props.navigation.navigate('SignUp')} style={{ fontWeight: "bold" }}>Sign Up!</Text>
