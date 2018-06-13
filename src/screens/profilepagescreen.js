@@ -127,9 +127,9 @@ export default class ProfilePageScreen extends Component {
 				<Content style={{ backgroundColor: "#F9F5E0" }}>
 					<ScrollView>
 						<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>PROFILE PAGE</Text>
-						<Text onPress={() => this.getPictures()}> Photos </Text>
-						{this.state.pictures.map((pic) => {
-							return <Text key={pic.imageid}> {pic.url} </Text>;
+						{/* <Text> Photos </Text> */}
+						{this.state.pictures.map((pic, index) => {
+							return <Text key={pic.id}> {pic.imageurl} </Text>;
 						})}
 						<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>ACCOUNT INFORMATION</Text>
 						<Text> User Email: {this.state.userEmail} </Text>
