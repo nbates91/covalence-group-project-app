@@ -127,7 +127,7 @@ export default class ProfilePageScreen extends Component {
 				<Content style={{ backgroundColor: "#F9F5E0" }}>
 					<ScrollView>
 						<Text style={{ alignSelf: "center", color: "#A2978D", fontWeight: "bold", padding: 15, fontSize: 18, }}>PROFILE PAGE</Text>
-						<Text> Photos </Text>
+						{/* <Text> Photos </Text> */}
 						{this.state.pictures.map((pic, index) => {
 							return <Text key={pic.id}> {pic.imageurl} </Text>;
 						})}

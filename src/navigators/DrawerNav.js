@@ -35,12 +35,12 @@ const DrawerNavigation = createDrawerNavigator({
 			title: `Log Out`,
 		}),
 	},
-	uploadImage: {
-		screen: uploadimage,
-		navigationOptions: ({ navigation }) => ({
-			title: `Upload Image`,
-		}),
-	},
+	// uploadImage: {
+	// 	screen: uploadimage,
+	// 	navigationOptions: ({ navigation }) => ({
+	// 		title: `Upload Image`,
+	// 	}),
+	// },
 },
 	{
 		contentComponent: (props) => (

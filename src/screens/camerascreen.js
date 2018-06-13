@@ -31,58 +31,58 @@ export default class OpenCamera extends Component {
 		);
 	}
 
-	// postImageToDB(uri) {
-	// 	fetch(`https://bham-hops.herokuapp.com/api/image/`,
-	// 		{
-	// 			method: 'POST',
-	// 			body: JSON.stringify({
-	// 				url: uri,
-	// 				userid: this.userID
-	// 			}),
-	// 			headers: new Headers({
-	// 				'Content-Type': 'application/json',
-	// 			}),
-	// 		})
-	// 		.then(res => {
-	// 			cloudinary.v2.uploader.upload(uri, function (error, result) { console.log(result); });
-	// 			// navigate to another screen
-	// 		})
-	// 		.catch(err => {
-	// 			alert(err);
-	// 			console.log(err);
-	// 		});
-	// }
+	postImageToDB(uri) {
+		fetch(`https://bham-hops.herokuapp.com/api/image/`,
+			{
+				method: 'POST',
+				body: JSON.stringify({
+					url: uri,
+					userid: this.userID
+				}),
+				headers: new Headers({
+					'Content-Type': 'application/json',
+				}),
+			})
+			// .then(res => {
+			// 	cloudinary.v2.uploader.upload(uri, function (error, result) { console.log(result); });
+			// 	// navigate to another screen
+			// })
+			.catch(err => {
+				alert(err);
+				console.log(err);
+			});
+	}
 
-	// 	takePicture = async function () {
-	// 		if (this.camera) {
-	// 			const options = { quality: 0.5, base64: true };
-	// 			const data = await this.camera.takePictureAsync(options);
-	// 			this.postImageToDB(data.uri);
-	// 			// console.log(data.uri);
-	// 		}
-	// 	};
-	// }
+	takePicture = async function () {
+		if (this.camera) {
+			const options = { quality: 0.5, base64: true };
+			const data = await this.camera.takePictureAsync(options);
+			this.postImageToDB(data.uri);
+			// console.log(data.uri);
+		}
+	};
+}
 
-	const styles = StyleSheet.create({
-		container: {
-			flex: 1,
-			flexDirection: 'column',
-			backgroundColor: 'black',
-		},
-		preview: {
-			flex: 1,
-			justifyContent: 'flex-end',
-			alignItems: 'center',
-		},
-		capture: {
-			flex: 0,
-			backgroundColor: '#fff',
-			borderRadius: 5,
-			padding: 15,
-			paddingHorizontal: 20,
-			alignSelf: 'center',
-			margin: 20,
-		},
-	});
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		flexDirection: 'column',
+		backgroundColor: 'black',
+	},
+	preview: {
+		flex: 1,
+		justifyContent: 'flex-end',
+		alignItems: 'center',
+	},
+	capture: {
+		flex: 0,
+		backgroundColor: '#fff',
+		borderRadius: 5,
+		padding: 15,
+		paddingHorizontal: 20,
+		alignSelf: 'center',
+		margin: 20,
+	},
+});
 
-	AppRegistry.registerComponent('OpenCamera', () => OpenCamera);
+AppRegistry.registerComponent('OpenCamera', () => OpenCamera);
