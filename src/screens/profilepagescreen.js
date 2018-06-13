@@ -153,15 +153,6 @@ export default class ProfilePageScreen extends Component {
 								/>
 							</Item>
 							<Text style={styles.errorRed}> {this.state.passwordErrorMessage} </Text>
-							{/* <Button
-								block
-								onPress={() => {
-									this.updatePassword();
-								}}
-							>
-								<Text>Update Password</Text>
-							</Button> */}
-
 							<ImageBackground source={require('../assets/buttonbg.png')} style={styles.buttonBackground}>
 								<TouchableOpacity
 									block
@@ -172,9 +163,7 @@ export default class ProfilePageScreen extends Component {
 									<Text style={{ color: "white", alignSelf: "center", height: 100 }}>UPDATE PASSWORD</Text>
 								</TouchableOpacity>
 							</ImageBackground>
-
 						</Form>
-
 					</ScrollView>
 				</Content>
 			</Container>

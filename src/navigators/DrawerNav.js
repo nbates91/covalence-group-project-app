@@ -46,9 +46,9 @@ const DrawerNavigation = createDrawerNavigator({
 		contentComponent: (props) => (
 			<SafeAreaView style={{ paddingTop: 20, flex: 1, backgroundColor: "#404041", justifyContent: 'space-between' }} >
 				<DrawerItems {...props} />
-				<Image style={{ width: 300, height: 300, resizeMode: 'contain' }} source={require('../assets/clearhop.png')} />
-				<Text style={{ alignContent: 'center', fontSize: 10, color: "#F9F5E0" }}>App built by: Jessie Melton, George Nguyen, and Nick Bates</Text>
-				<Text style={{ alignContent: 'center', fontSize: 10, color: "#F9F5E0" }}>Designs provided by: Salzburn-Designs</Text>
+				<Image style={{ width: 250, height: 250, resizeMode: 'contain' }} source={require('../assets/clearhop.png')} />
+				<Text style={{ alignContent: 'center', fontSize: 8, color: "#F9F5E0" }}>App built by: Nick Bates, Jessie Melton, and George Nguyen</Text>
+				<Text style={{ alignContent: 'center', fontSize: 8, color: "#F9F5E0" }}>Designs provided by: Salzburn-Designs</Text>
 			</SafeAreaView>
 		),
 		contentOptions: {

@@ -53,14 +53,14 @@ export default class OpenCamera extends Component {
 			});
 	}
 
-	takePicture = async function () {
-		if (this.camera) {
-			const options = { quality: 0.5, base64: true };
-			const data = await this.camera.takePictureAsync(options);
-			this.postImageToDB(data.uri);
-			// console.log(data.uri);
-		}
-	};
+	// 	takePicture = async function () {
+	// 		if (this.camera) {
+	// 			const options = { quality: 0.5, base64: true };
+	// 			const data = await this.camera.takePictureAsync(options);
+	// 			this.postImageToDB(data.uri);
+	// 			// console.log(data.uri);
+	// 		}
+	// 	};
 }
 
 const styles = StyleSheet.create({

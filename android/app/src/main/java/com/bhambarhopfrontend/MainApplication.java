@@ -7,8 +7,6 @@ import com.oblador.vectoricons.VectorIconsPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import org.reactnative.camera.RNCameraPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
-import org.reactnative.camera.RNCameraPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -32,8 +30,6 @@ public class MainApplication extends Application implements ReactApplication {
             new VectorIconsPackage(),
             new ImagePickerPackage(),
             new RNFetchBlobPackage(),
-            new RNCameraPackage(),
-            new VectorIconsPackage(),
             new RNCameraPackage()
       );
     }
