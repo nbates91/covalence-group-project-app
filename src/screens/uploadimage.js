@@ -72,6 +72,9 @@ export default class UploadImage extends Component {
                         return result.secure_url;
                     }).then((url) => {
                         return this.postToDb(url);
+                    })
+                    .catch( (err) => {
+                        console.log(err);
                     });
             }
         });
